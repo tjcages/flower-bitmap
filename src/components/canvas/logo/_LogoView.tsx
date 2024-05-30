@@ -3,6 +3,7 @@
 import {
   Fluid // @ts-expect-error - Ignore import error
 } from "@alienkitty/alien.js/src/three";
+import { isMobile, isSafari, isTablet } from "react-device-detect";
 import { Group, Mesh, OrthographicCamera, Scene, WebGLRenderTarget } from "three";
 
 import Logo from "./_Logo";
@@ -105,6 +106,8 @@ class LogoView extends Group {
     this.logo = new Logo(this.controller, "/framework.svg");
     // Reduce size to make room for fluid dissipation
     this.logo.scale.multiplyScalar(3);
+    // center the logo
+    this.logo.position.set(isMobile || isTablet || isSafari ? -1.25 : -1.5, 0, 0);
     if (this.scene) this.scene.add(this.logo);
   }
 

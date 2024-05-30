@@ -1,6 +1,6 @@
 "use client";
 
-import { isMobile } from "react-device-detect";
+import { isMobile, isSafari, isTablet } from "react-device-detect";
 import { PerspectiveCamera, Vector2, Vector3 } from "three";
 
 class _ {
@@ -46,6 +46,7 @@ class _ {
       return;
     }
 
+    if (isMobile || isTablet || isSafari) return;
     this.mouse.x = ((clientX / document.documentElement.clientWidth) * 2 - 1) * 0.5;
     this.mouse.y = Math.max(0, 1 - (clientY / document.documentElement.clientHeight) * 2);
   };

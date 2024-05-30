@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const _ = () => {
   return (
-    <div className="absolute z-10 w-full h-full flex items-end justify-center p-24 text-white uppercase">
+    <div className="absolute z-10 w-full h-full flex items-end justify-center p-4 md:p-24 text-white uppercase">
       <Image
         src="/logo.svg"
         alt="totem"
