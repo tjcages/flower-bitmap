@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 
-const _ = localFont({
+const sohne = localFont({
   src: [
     {
       path: "./Sohne-Buch.otf",
@@ -36,4 +36,4 @@ const _ = localFont({
   variable: "--font-sohne"
 });
 
-export default _;
+export { sohne };

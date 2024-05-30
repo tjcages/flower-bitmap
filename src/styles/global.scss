@@ -5,6 +5,7 @@
 /*   VARIABLES   */
 @layer base {
   :root {
+    --color-white: 239, 230, 225; /* #efe6e1 */
     --color-blue: 99, 91, 255; /* #635bff */
     --color-orange: 248, 184, 134; /* #f8b886 */
     --color-dull-red: 237 30 35; /* #ED1E23 */
@@ -32,7 +33,7 @@
 
   html,
   body {
-    @apply bg-[#04080c];
+    @apply text-white bg-[#04080c];
     @apply m-0 p-0 font-serif text-primary;
     @apply select-none;
 
@@ -63,11 +64,11 @@
 
   button {
     @apply flex items-center justify-center;
-    @apply px-4 py-2 text-[16px] md:text-[18px];
-    @apply rounded-lg bg-white/80 text-black backdrop-blur-lg;
-    @apply outline outline-1 outline-offset-1 outline-white/20 md:outline-2 md:outline-offset-2;
+    @apply px-14 py-1 text-[16px] uppercase md:text-[18px];
+    @apply bg-white/80 text-black backdrop-blur-lg;
     @apply pointer-events-auto transition-all duration-300 ease-in-out;
-    @apply hover:bg-white/100 hover:outline-offset-[4px] hover:outline-white hover:md:outline-offset-[8px];
+    @apply outline outline-1 outline-offset-0 outline-white/20 md:outline-2 md:outline-offset-0;
+    @apply hover:bg-white/100 hover:outline-offset-[2px] hover:outline-white hover:md:outline-offset-[2px];
     @apply disabled:cursor-not-allowed disabled:opacity-50;
   }
 
@@ -123,15 +124,15 @@
   h1,
   h2,
   h3 {
-    font-weight: 600 !important;
+    font-weight: 400;
     line-height: 0.8em;
     letter-spacing: 0.01em;
     mask-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.8) 0%, black 100%);
   }
 
   p {
-    line-height: 1.2em;
-    text-align: left;
+    @apply max-w-md text-center text-sm leading-4;
+    text-wrap: pretty;
   }
 
   a {

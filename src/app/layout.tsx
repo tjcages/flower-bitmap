@@ -1,4 +1,4 @@
-import Sohne from "@/assets/fonts/sohne";
+import { moderat } from "@/assets/fonts";
 import { seo } from "@/seo";
 import { cn } from "@/utils";
 import { Analytics } from "@vercel/analytics/react";
@@ -21,7 +21,7 @@ console.log("Made with ❤️ by @tjcages");
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={cn(Sohne.className, Sohne.variable)}>
+      <body className={cn(moderat.className, moderat.variable)}>
         {children}
         <Analytics />
       </body>

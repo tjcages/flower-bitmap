@@ -45,7 +45,7 @@ class _ extends Group {
     const group = new Group();
     group.scale.y *= -1;
     group.scale.multiplyScalar(0.002);
-    group.position.set(-2, 0, 0);
+    group.position.set(-0.5, 0, 0);
 
     for (let i = 0; i < paths.length; i++) {
       const path = paths[i];

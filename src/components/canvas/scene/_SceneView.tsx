@@ -40,6 +40,7 @@ class _ extends Group {
   initViews() {
     if (!this.controller) return;
     this.floor = new Floor(this.controller);
+    this.floor.position.set(0, -0.5, 0);
     this.add(this.floor);
 
     this.triangle = new LogoView(this.controller);

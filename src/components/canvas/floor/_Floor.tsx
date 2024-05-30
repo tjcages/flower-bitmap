@@ -84,7 +84,7 @@ class _ extends Group {
 
     const uniforms = {
       mirror: { value: 0 },
-      mixStrength: { value: 10 }
+      mixStrength: { value: 15 }
     };
 
     material.onBeforeCompile = shader => {
@@ -141,7 +141,7 @@ class _ extends Group {
                   // Fresnel term
                   vec3 toEye = normalize(vToEye);
                   float theta = max(dot(toEye, normal), 0.0);
-                  float reflectance = pow((1.0 - theta), 5.0);
+                  float reflectance = pow((1.0 - theta), .0);
 
                   reflectColor = mix(vec4(0), reflectColor, reflectance);
 

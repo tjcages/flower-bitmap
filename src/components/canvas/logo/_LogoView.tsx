@@ -36,8 +36,6 @@ class LogoView extends Group {
   mesh: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   logo: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sig: any;
 
   constructor(controller: Props) {
     super();
@@ -77,9 +75,9 @@ class LogoView extends Group {
     this.fluid = new Fluid(this.renderer, {
       iterations: 10,
       curlStrength: 40,
-      pressureDissipation: 0.5,
-      velocityDissipation: 0.85,
-      densityDissipation: 0.97,
+      pressureDissipation: 0.99,
+      velocityDissipation: 0.6,
+      densityDissipation: 0.99,
       radius: 0.1
     });
     this.fluid.splatMaterial.uniforms.uAspect = aspect;
@@ -93,7 +91,7 @@ class LogoView extends Group {
     material.uniforms.tFluid = this.fluid.uniform;
 
     const mesh = new Mesh(quad, material);
-    mesh.position.set(0, 0.9, 0);
+    mesh.position.set(0, 2, 0);
     mesh.scale.set(this.width, this.height, 1);
     mesh.lookAt(camera.position);
     mesh.renderOrder = 1; // Render last
@@ -104,16 +102,9 @@ class LogoView extends Group {
   }
 
   initViews() {
-    this.sig = new Logo(this.controller, "/totem-sig.svg", {
-      color: "red"
-    });
-    this.sig.scale.multiplyScalar(0.85);
-    this.sig.position.set(0.75, 0.4, -1);
-    if (this.scene) this.scene.add(this.sig);
-
-    this.logo = new Logo(this.controller, "/totem.svg");
+    this.logo = new Logo(this.controller, "/framework.svg");
     // Reduce size to make room for fluid dissipation
-    this.logo.scale.multiplyScalar(0.8);
+    this.logo.scale.multiplyScalar(3);
     if (this.scene) this.scene.add(this.logo);
   }
 
@@ -146,7 +137,6 @@ class LogoView extends Group {
 
   ready = async () => {
     await this.logo.initMesh();
-    await this.sig.initMesh();
 
     this.isLoaded = true;
 
