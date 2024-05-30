@@ -1,5 +1,5 @@
 export const seo = {
-  title: "Totem",
+  title: "Framework x Totem",
   description: "A new format of music",
   icons: [
     {
@@ -14,7 +14,7 @@ export const seo = {
     description: "A new format of music",
     images: [
       {
-        url: "/preview.png",
+        url: "https://frameworkxtotem.vercel.app/preview.png",
         width: 1600,
         height: 898,
         alt: "Totem Preview"
