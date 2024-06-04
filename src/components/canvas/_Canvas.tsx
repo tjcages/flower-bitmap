@@ -25,10 +25,6 @@ class Canvas {
   private static view: SceneView;
   private static ui: typeof UI;
 
-  constructor() {
-    Canvas.init();
-  }
-
   static async init() {
     this.initLoader();
     this.initStage();
@@ -190,6 +186,7 @@ class Canvas {
 const _ = () => {
   useEffect(() => {
     new Canvas();
+    Canvas.init();
   }, []);
   return (
     <canvas
