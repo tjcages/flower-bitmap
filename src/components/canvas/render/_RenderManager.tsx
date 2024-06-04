@@ -94,8 +94,8 @@ class RenderManager {
     this.camera = camera;
 
     // Blur
-    this.blurFocus = !(isMobile || isTablet || isSafari) ? 0.5 : 0.25;
-    this.blurRotation = !(isMobile || isTablet || isSafari) ? 0 : MathUtils.degToRad(75);
+    this.blurFocus = isMobile || isTablet || isSafari ? 0.5 : 0.25;
+    this.blurRotation = isMobile || isTablet || isSafari ? 0 : MathUtils.degToRad(75);
     this.blurFactor = 1;
 
     // Bloom

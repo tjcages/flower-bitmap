@@ -157,7 +157,7 @@ class CameraController {
   // Public methods
 
   static setView = (view?: View) => {
-    if ((isMobile || isTablet || isSafari) && (!view || view === this.next)) {
+    if (!(isMobile || isTablet || isSafari) && (!view || view === this.next)) {
       this.next = this;
       this.zoomedIn = false;
     } else {

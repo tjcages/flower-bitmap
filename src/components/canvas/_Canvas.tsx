@@ -88,7 +88,7 @@ class Canvas {
     // Landing and 404 page
     let home;
 
-    if (isMobile || isTablet || isSafari) {
+    if (!(isMobile || isTablet || isSafari)) {
       home = {
         path: "/",
         title: "Totem"

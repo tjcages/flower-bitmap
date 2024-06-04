@@ -107,7 +107,7 @@ class LogoView extends Group {
     // Reduce size to make room for fluid dissipation
     this.logo.scale.multiplyScalar(3);
     // center the logo
-    this.logo.position.set(isMobile || isTablet || isSafari ? -1.25 : -1.5, 0, 0);
+    this.logo.position.set(!(isMobile || isTablet || isSafari) ? -1.25 : -1.5, 0, 0);
     if (this.scene) this.scene.add(this.logo);
   }
 
