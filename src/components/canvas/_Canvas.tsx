@@ -9,6 +9,7 @@ import {
   ticker
 } from "@alienkitty/alien.js/all/three";
 import { useEffect } from "react";
+import { isMobile, isSafari, isTablet } from "react-device-detect";
 
 import { CameraController } from "./camera";
 import { Data, Page } from "./page";
@@ -87,7 +88,7 @@ class Canvas {
     // Landing and 404 page
     let home;
 
-    if (!navigator.maxTouchPoints) {
+    if (isMobile || isTablet || isSafari) {
       home = {
         path: "/",
         title: "Totem"

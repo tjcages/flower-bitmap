@@ -9,6 +9,7 @@ import {
   lerpCameras,
   tween
 } from "@alienkitty/alien.js/all/three";
+import { isMobile, isSafari, isTablet } from "react-device-detect";
 
 import { Circle, Cube, Shark } from "@/components/canvas/objects";
 import { Data } from "@/components/canvas/page";
@@ -156,7 +157,7 @@ class CameraController {
   // Public methods
 
   static setView = (view?: View) => {
-    if (!navigator.maxTouchPoints && (!view || view === this.next)) {
+    if ((isMobile || isTablet || isSafari) && (!view || view === this.next)) {
       this.next = this;
       this.zoomedIn = false;
     } else {

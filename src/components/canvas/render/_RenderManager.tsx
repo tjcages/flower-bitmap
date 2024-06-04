@@ -15,6 +15,7 @@ import {
   delayedCall,
   tween
 } from "@alienkitty/alien.js/all/three";
+import { isMobile, isSafari, isTablet } from "react-device-detect";
 import {
   AdditiveBlending,
   Camera,
@@ -93,8 +94,8 @@ class RenderManager {
     this.camera = camera;
 
     // Blur
-    this.blurFocus = navigator.maxTouchPoints ? 0.5 : 0.25;
-    this.blurRotation = navigator.maxTouchPoints ? 0 : MathUtils.degToRad(75);
+    this.blurFocus = !(isMobile || isTablet || isSafari) ? 0.5 : 0.25;
+    this.blurRotation = !(isMobile || isTablet || isSafari) ? 0 : MathUtils.degToRad(75);
     this.blurFactor = 1;
 
     // Bloom
