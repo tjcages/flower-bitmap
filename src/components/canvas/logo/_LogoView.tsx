@@ -103,7 +103,7 @@ class LogoView extends Group {
   }
 
   initViews() {
-    this.logo = new Logo(this.controller, "/framework.svg");
+    this.logo = new Logo("/framework.svg");
     // Reduce size to make room for fluid dissipation
     this.logo.scale.multiplyScalar(3);
     // center the logo

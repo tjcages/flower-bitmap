@@ -1,6 +1,5 @@
 "use client";
 
-// @ts-expect-error - Ignore import error
 import rgbshift from "@alienkitty/alien.js/src/shaders/modules/rgbshift/rgbshift.glsl.js";
 import { AdditiveBlending, GLSL3, RawShaderMaterial } from "three";
 

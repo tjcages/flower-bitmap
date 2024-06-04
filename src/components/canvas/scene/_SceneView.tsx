@@ -2,59 +2,58 @@
 
 import { Group } from "three";
 
-import Floor from "@/components/canvas/floor";
-import LogoView from "@/components/canvas/logo";
+import { Circle, Cube, Floor, Shark } from "@/components/canvas/objects";
 
-interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  loadTexture: (url: string) => Promise<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  renderer: any;
-  aspect: { value: number };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  camera: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  quad: any;
-  getFrustum: (offsetZ?: number) => { width: number; height: number };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  loadSVG: (url: string) => Promise<any>;
-}
+class SceneView extends Group {
+  floor?: Floor;
+  darkPlanet?: Circle;
+  floatingCrystal?: Shark;
+  abstractCube?: Cube;
 
-class _ extends Group {
-  controller: Props;
-  visible: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  floor: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  triangle: any;
-
-  constructor(controller: Props) {
+  constructor() {
     super();
 
     this.visible = false;
-    this.controller = controller;
 
     this.initViews();
   }
 
   initViews() {
-    if (!this.controller) return;
-    this.floor = new Floor(this.controller);
-    this.floor.position.set(0, -0.5, 0);
+    this.floor = new Floor();
     this.add(this.floor);
 
-    this.triangle = new LogoView(this.controller);
-    this.add(this.triangle);
+    this.darkPlanet = new Circle();
+    this.add(this.darkPlanet);
+
+    this.floatingCrystal = new Shark();
+    this.add(this.floatingCrystal);
+
+    this.abstractCube = new Cube();
+    this.add(this.abstractCube);
   }
 
   // Public methods
 
-  resize = (width: number, height: number, dpr: number) => {
-    this.floor.resize(width, height);
-    this.triangle.resize(width, height, dpr);
+  resize = (width: number, height: number): void => {
+    if (this.floor) this.floor.resize(width, height);
+    if (this.darkPlanet) this.darkPlanet.resize(width, height);
+    if (this.floatingCrystal) this.floatingCrystal.resize(width, height);
+    if (this.abstractCube) this.abstractCube.resize(width, height);
   };
 
-  ready = () => Promise.all([this.floor.initMesh(), this.triangle.ready()]);
+  update = (time: number): void => {
+    if (this.darkPlanet) this.darkPlanet.update();
+    if (this.floatingCrystal) this.floatingCrystal.update(time);
+    if (this.abstractCube) this.abstractCube.update();
+  };
+
+  ready = (): Promise<void[]> =>
+    Promise.all([
+      this.floor?.initMesh(),
+      this.darkPlanet?.initMesh(),
+      this.floatingCrystal?.initMesh(),
+      this.abstractCube?.initMesh()
+    ]);
 }
 
-export default _;
+export default SceneView;

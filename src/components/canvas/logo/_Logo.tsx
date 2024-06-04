@@ -4,20 +4,15 @@ import { Group, Mesh, MeshBasicMaterial, ShapeGeometry } from "three";
 // @ts-expect-error - Ignore import error
 import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
 
-interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  loadSVG: (url: string) => Promise<any>;
-}
+import { WorldController } from "@/components/canvas/world";
 
 class _ extends Group {
-  controller: Props;
   url: string;
   options?: {
     color: string;
   };
 
   constructor(
-    controller: Props,
     url: string,
     options?: {
       color: string;
@@ -25,13 +20,12 @@ class _ extends Group {
   ) {
     super();
 
-    this.controller = controller;
     this.url = url;
     this.options = options;
   }
 
   async initMesh() {
-    const { loadSVG } = this.controller;
+    const { loadSVG } = WorldController;
 
     // Fetch the SVG data from the provided URL
     const svgData = await fetch(this.url);
@@ -51,7 +45,8 @@ class _ extends Group {
 
       const material = new MeshBasicMaterial({
         color: this.options?.color || "white",
-        transparent: true
+        transparent: true,
+        depthTest: false
       });
       const shapes = SVGLoader.createShapes(path);
 
@@ -64,6 +59,11 @@ class _ extends Group {
     }
 
     this.add(group);
+  }
+
+  public update(): void {
+    // always be looking at the camera
+    this.lookAt(WorldController.camera.position);
   }
 }
 

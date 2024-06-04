@@ -32,6 +32,9 @@ dependencies:
   next:
     specifier: 14.1.4
     version: 14.1.4(@babel/core@7.24.4)(react-dom@18.0.0)(react@18.0.0)(sass@1.74.1)
+  oimophysics:
+    specifier: ^1.2.2
+    version: 1.2.2
   react:
     specifier: ^18
     version: 18.0.0
@@ -6063,6 +6066,11 @@ packages:
       define-properties: 1.2.1
       es-object-atoms: 1.0.0
     dev: true
+
+  /oimophysics@1.2.2:
+    resolution: {integrity: sha512-0LhtdRkcGtO3oCFuNZfLETdDs3ZHxPX/Z2SaBbwr2zvI3qP4bzjWyyy5WagLl0ZxSDuw8Ftbcw+hLhwxTTpuxA==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    dev: false
 
   /once@1.3.3:
     resolution: {integrity: sha512-6vaNInhu+CHxtONf3zw3vq4SP2DOQhjBvIa3rNcG0+P7eKWlYH6Peu7rHizSloRU2EwMz6GraLieis9Ac9+p1w==}

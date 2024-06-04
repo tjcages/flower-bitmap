@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./_root.scss";
+
 /*   VARIABLES   */
 @layer base {
   :root {
@@ -33,7 +35,7 @@
 
   html,
   body {
-    @apply text-white bg-[#04080c];
+    @apply bg-[#04080c] text-red-500;
     @apply m-0 p-0 font-serif text-primary;
     @apply select-none;
 
@@ -55,7 +57,7 @@
     @apply max-h-screen w-full;
     @apply flex flex-col items-center justify-center gap-4;
     @apply p-2 md:p-6 2xl:p-8;
-    @apply text-center text-white;
+    @apply text-white;
     @apply pointer-events-none select-none;
 
     height: 100dvh;
@@ -91,7 +93,7 @@
     @apply absolute bottom-0 left-0 right-0 top-0 z-[100000000000];
     @apply max-h-screen w-full;
     @apply flex flex-col items-center justify-center md:p-6 2xl:p-8;
-    @apply text-center text-white;
+    @apply text-white;
     @apply pointer-events-none select-none;
 
     height: 100dvh;
@@ -131,7 +133,7 @@
   }
 
   p {
-    @apply max-w-md text-center text-sm leading-4;
+    @apply max-w-md text-sm leading-4;
     text-wrap: pretty;
   }
 

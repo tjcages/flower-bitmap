@@ -1,3 +1,3 @@
-import _ from "./_CameraController";
+import CameraController from "./_CameraController";
 
-export default _;
+export { CameraController };

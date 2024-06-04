@@ -1,0 +1,16 @@
+{
+  "pages": [
+    {
+      "path": "/live-playlists",
+      "title": "Live Playlists"
+    },
+    {
+      "path": "/discoshark",
+      "title": "DiscoShark"
+    },
+    {
+      "path": "/packaging",
+      "title": "Packaging"
+    }
+  ]
+}

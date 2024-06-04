@@ -1,3 +1,3 @@
-import _ from "./_WorldController";
+import WorldController from "./_WorldController";
 
-export default _;
+export { WorldController };

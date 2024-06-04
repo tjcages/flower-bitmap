@@ -1,3 +1,3 @@
-import _ from "./_RenderManager";
+import RenderManager from "./_RenderManager";
 
-export default _;
+export { RenderManager };
