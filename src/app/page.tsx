@@ -1,15 +1,15 @@
 import { seo } from "@/seo";
 import type { Metadata, ResolvingMetadata } from "next";
 
-import Main from "./_Main";
+import Home from "./_Home";
 
 type Props = {
   params: unknown;
   searchParams: { r?: string };
 };
 
-export default async function HomePage(_: Props) {
-  return <Main />;
+export default function HomePage(_: Props) {
+  return <Home />;
 }
 
 export async function generateMetadata(
