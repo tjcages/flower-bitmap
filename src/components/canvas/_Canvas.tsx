@@ -103,7 +103,7 @@ class Canvas {
     Router.add("/", Page, home);
     Router.add("404", Page, home);
 
-    Router.init({ path: "" });
+    Router.init({ path: "/" });
   }
 
   static initViews() {
