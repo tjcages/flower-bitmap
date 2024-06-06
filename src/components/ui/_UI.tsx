@@ -15,14 +15,13 @@ const _ = () => {
           Framework <span className="opacity-50">x</span> Totem
         </h1>
         <h1 className="text-xs text-center max-w-lg">
-          Framework x Totem Collab
-          <br />
-          <br />
           Initial Commitment: 100 DiscoShark Units
           <br />
-          Live Spotify Playlists
+          Live Spotify Playlist
           <br />
-          Unique Event Experiences
+          Custom Framework Packaging
+          <br />
+          (optional) Custom Event Stickers
           <br />
         </h1>
       </div>

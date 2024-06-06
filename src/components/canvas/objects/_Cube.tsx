@@ -40,7 +40,7 @@ class _ extends Group {
   constructor() {
     super();
 
-    this.position.x = 2.25;
+    this.position.x = -2.5;
     this.position.z = 0.2;
 
     this.initCamera();
@@ -122,16 +122,16 @@ class _ extends Group {
     );
     this.renderDecal(
       "./totem.svg",
-      new Vector3(0, 0, 0.7),
+      new Vector3(0, 0, -0.7),
       new Vector3(0.5, 0.25, 0.5),
-      new Euler(0, 0, 0),
+      new Euler(0, Math.PI, 0),
       false
     );
     this.renderDecal(
       "./disclaimer.svg",
-      new Vector3(0, 0, -0.7),
-      new Vector3(0.5, 0.4, 0.5),
-      new Euler(0, Math.PI, 0),
+      new Vector3(0, 0, 0.7),
+      new Vector3(0.7, 0.6, 0.7),
+      new Euler(0, 0, 0),
       false
     );
     this.renderDecal(
@@ -202,7 +202,7 @@ class _ extends Group {
 
   public update(): void {
     if (!params.animate || !this.mesh) return;
-    this.mesh.rotation.y -= 0.005 * params.speed;
+    this.mesh.rotation.y -= 0.0025 * params.speed;
   }
 }
 

@@ -98,7 +98,7 @@ class _ extends Group {
   public update(time: number): void {
     if (!params.animate || !this.group) return;
     this.group.position.setY((-15 + Math.sin(time * params.speed)) * 0.1);
-    this.group.rotation.y += 0.01 * params.speed;
+    this.group.rotation.y += 0.005 * params.speed;
   }
 }
 

@@ -116,6 +116,7 @@ class CameraController {
     if (this.zoomedIn) {
       this.ui.details.animateOut(() => {
         const { data } = Router.get(location.pathname);
+        console.log(data);
 
         this.ui.details.title.setTitle(data.title.replace(/[\s.]+/g, "_"));
 

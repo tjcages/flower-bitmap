@@ -52,7 +52,7 @@ class _ extends Group {
   constructor() {
     super();
 
-    this.position.x = -2.5;
+    this.position.x = 2.5;
 
     // 25 degree tilt like Mars
     this.rotation.y = MathUtils.degToRad(25);
@@ -179,7 +179,7 @@ class _ extends Group {
   public update(): void {
     if (!this.mesh) return;
     // Counter clockwise rotation
-    this.mesh.rotation.y += 0.005 * params.speed;
+    this.mesh.rotation.y += 0.0025 * params.speed;
   }
 }
 

@@ -45,8 +45,10 @@ class ScenePanelController {
 
     if (data && data.path) {
       const path = Router.getPath(data.path);
+      // get the base Url
+      const base = window.location.href.split("/").slice(0, 3).join("/");
 
-      Router.setPath(`${path}/`);
+      Router.setPath(base + path.slice(1));
       Point3D.animateOut();
     }
   };

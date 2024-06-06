@@ -99,10 +99,10 @@ class RenderManager {
     this.blurFactor = 1;
 
     // Bloom
-    this.luminosityThreshold = 0.1;
+    this.luminosityThreshold = 0.35;
     this.luminositySmoothing = 1;
-    this.bloomStrength = 0.3;
-    this.bloomRadius = 0.2;
+    this.bloomStrength = 0.97;
+    this.bloomRadius = 0.3;
 
     // Debug
     this.display = DisplayOptions.Default;
