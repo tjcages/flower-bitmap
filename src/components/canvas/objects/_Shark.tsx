@@ -57,7 +57,7 @@ class _ extends Group {
     // make material metallic
     mesh.material = new MeshStandardMaterial({
       name: name,
-      color: 0x808080, // light silver
+      color: 0xa3a3a3, // light silver
       metalness: 1,
       roughness: 0.1
     });

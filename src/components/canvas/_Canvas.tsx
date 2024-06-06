@@ -103,6 +103,13 @@ class Canvas {
     Router.add("404", Page, home);
 
     Router.init({ path: "" });
+
+    // if escape key is pressed go back to home
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        Router.setPath("/");
+      }
+    });
   }
 
   static initViews() {

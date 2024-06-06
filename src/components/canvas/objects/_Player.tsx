@@ -59,7 +59,7 @@ class _ extends Group {
   public async initMesh(): Promise<void> {
     const { anisotropy, loadTexture } = WorldController;
 
-    const geometry = new BoxGeometry(1, 0.05, 1.35);
+    const geometry = new BoxGeometry(0.85, 0.05, 1.35);
 
     // Second set of UVs for aoMap and lightMap
     geometry.setAttribute("uv2", geometry.attributes.uv);
@@ -94,8 +94,8 @@ class _ extends Group {
     });
 
     const mesh = new Mesh(geometry, material);
-    mesh.rotation.x = MathUtils.degToRad(-45);
-    mesh.rotation.z = MathUtils.degToRad(-45);
+    mesh.rotation.x = MathUtils.degToRad(80);
+    mesh.rotation.z = MathUtils.degToRad(45);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.name = name;
@@ -107,13 +107,14 @@ class _ extends Group {
 
     // Decals
     this.renderDecal(
-      "./discoshark.svg",
-      new Vector3(0, 0.7, 0),
-      new Vector3(0.5, 1, 0.5),
+      "./player.svg",
+      new Vector3(0, 0.2, 0),
+      new Vector3(0.8, 1.3, 1),
       new Euler(MathUtils.degToRad(-90), 0, 0),
       false
     );
 
+    mesh.scale.multiplyScalar(1.1);
     this.add(mesh);
   }
 
@@ -174,7 +175,9 @@ class _ extends Group {
 
   public update(): void {
     if (!params.animate || !this.mesh) return;
-    this.mesh.rotation.x -= 0.0025 * params.speed;
+    // rotate between -45 & 45 degrees
+
+    this.mesh.rotation.x += Math.sin(Date.now() * 0.001) * 0.0025 * params.speed;
   }
 }
 
