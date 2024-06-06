@@ -121,7 +121,7 @@ class Canvas {
       breakpoint,
       details: {
         title: "",
-        content: /* html */ `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+        content: /* html */ ``,
         links: [
           {
             title: "Next"

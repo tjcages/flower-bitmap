@@ -28,7 +28,7 @@ const _ = () => {
   });
 
   return (
-    <div className="absolute z-10 w-full h-full flex items-end justify-center p-4 md:p-[5vh] text-white uppercase pointer-events-none">
+    <div className="fixed w-full h-full flex items-end justify-center p-4 md:p-[5vh] text-white uppercase pointer-events-none">
       <div ref={ref} className="flex flex-col items-center justify-center gap-2">
         <h1 className="flex items-center">
           Framework <span className="opacity-50">x</span> Totem

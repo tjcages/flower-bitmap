@@ -54,7 +54,8 @@ class WorldController {
   static initWorld() {
     this.renderer = new WebGLRenderer({
       powerPreference: "high-performance",
-      antialias: true
+      antialias: true,
+      canvas: document.querySelector("#canvas") || undefined
     });
 
     // Disable color management
