@@ -11,7 +11,7 @@ class _ {
     this.path = path;
     this.title = title;
 
-    document.title = `${this.title} — Framework`;
+    document.title = `${this.title}`;
   }
 }
 
