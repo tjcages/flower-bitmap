@@ -90,7 +90,7 @@ class Canvas {
     if (!navigator.maxTouchPoints) {
       home = {
         path: "/",
-        title: "Totem"
+        title: "Framework x Totem"
       };
 
       Data.pages.push(home);
