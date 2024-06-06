@@ -1,15 +1,15 @@
 "use client";
 
-import { gsap } from "gsap";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
-import Main from "./_Main";
+const Main = dynamic(() => import("./_Main"), { ssr: false });
 
 const _ = () => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    gsap.delayedCall(0.5, () => setLoaded(true));
+    setLoaded(true);
   }, []);
 
   return loaded ? <Main /> : null;
