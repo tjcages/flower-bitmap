@@ -34,12 +34,12 @@ class _ {
     const { data } = Router.get(location.pathname);
 
     switch (data.path) {
-      case "/live-playlists":
-        return this.view.darkPlanet;
-      case "/discoshark":
-        return this.view.floatingCrystal;
       case "/packaging":
         return this.view.abstractCube;
+      case "/discoshark":
+        return this.view.floatingCrystal;
+      case "/live-playlists":
+        return this.view.darkPlanet;
       default:
         return undefined;
     }

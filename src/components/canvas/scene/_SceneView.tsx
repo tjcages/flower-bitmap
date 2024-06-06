@@ -2,11 +2,11 @@
 
 import { Group } from "three";
 
-import { Circle, Cube, Floor, Shark } from "@/components/canvas/objects";
+import { Cube, Floor, Player, Shark } from "@/components/canvas/objects";
 
 class SceneView extends Group {
   floor?: Floor;
-  darkPlanet?: Circle;
+  darkPlanet?: Player;
   floatingCrystal?: Shark;
   abstractCube?: Cube;
 
@@ -22,7 +22,7 @@ class SceneView extends Group {
     this.floor = new Floor();
     this.add(this.floor);
 
-    this.darkPlanet = new Circle();
+    this.darkPlanet = new Player();
     this.add(this.darkPlanet);
 
     this.floatingCrystal = new Shark();

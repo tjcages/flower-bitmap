@@ -9,7 +9,6 @@ import {
   ticker
 } from "@alienkitty/alien.js/all/three";
 import { useEffect } from "react";
-import { isMobile, isSafari, isTablet } from "react-device-detect";
 
 import { CameraController } from "./camera";
 import { Data, Page } from "./page";
@@ -24,6 +23,10 @@ class Canvas {
   private static assetLoader: typeof AssetLoader;
   private static view: SceneView;
   private static ui: typeof UI;
+
+  constructor() {
+    Canvas.init();
+  }
 
   static async init() {
     this.initLoader();
@@ -84,7 +87,7 @@ class Canvas {
     // Landing and 404 page
     let home;
 
-    if (!(isMobile || isTablet || isSafari)) {
+    if (!navigator.maxTouchPoints) {
       home = {
         path: "/",
         title: "Totem"
@@ -99,7 +102,7 @@ class Canvas {
     Router.add("/", Page, home);
     Router.add("404", Page, home);
 
-    Router.init({ path: "/" });
+    Router.init({ path: "" });
   }
 
   static initViews() {
@@ -186,7 +189,6 @@ class Canvas {
 const _ = () => {
   useEffect(() => {
     new Canvas();
-    Canvas.init();
   }, []);
   return (
     <canvas

@@ -2,15 +2,14 @@
 
 import { Point3D } from "@alienkitty/alien.js/all/three";
 import {
+  BoxGeometry,
   Color,
   Euler,
   Group,
-  IcosahedronGeometry,
   MathUtils,
   Mesh,
   MeshStandardMaterial,
   PerspectiveCamera,
-  RepeatWrapping,
   TextureLoader,
   Vector2,
   Vector3
@@ -19,24 +18,14 @@ import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry";
 
 import { WorldController } from "@/components/canvas/world";
 
-interface Layers {
-  default: number;
-  velocity: number;
-}
+const breakpoint = 1000;
 
-interface Params {
-  animate: boolean;
-  speed: number;
-}
-
-const breakpoint: number = 1000;
-
-const layers: Layers = {
+const layers = {
   default: 0,
   velocity: 1
 };
 
-const params: Params = {
+const params = {
   animate: true,
   speed: 1
 };
@@ -46,17 +35,13 @@ const name = "Bespoke Audio Player";
 class _ extends Group {
   private camera?: PerspectiveCamera;
   mesh?: Mesh;
-  logoMesh?: Mesh;
   point?: typeof Point3D;
 
   constructor() {
     super();
 
     this.position.x = 2.5;
-
-    // 25 degree tilt like Mars
-    this.rotation.y = MathUtils.degToRad(25);
-    // this.rotation.z = MathUtils.degToRad(-10);
+    this.position.z = 0.2;
 
     this.initCamera();
   }
@@ -66,49 +51,34 @@ class _ extends Group {
     this.camera.near = 0.5;
     this.camera.far = 40;
     this.camera.position.z = 8;
-    this.camera.lookAt(this.position.x - 1.4, this.position.y, 0);
+    this.camera.lookAt(this.position.x - 1.2, this.position.y, 0);
     this.camera.zoom = 1.5;
     this.camera.matrixAutoUpdate = false;
   }
 
-  async initMesh(): Promise<void> {
-    const { anisotropy, loadTexture, loadEnvironmentTexture } = WorldController;
+  public async initMesh(): Promise<void> {
+    const { anisotropy, loadTexture } = WorldController;
 
-    const geometry = new IcosahedronGeometry(0.6, 12);
+    const geometry = new BoxGeometry(1, 0.05, 1.35);
 
     // Second set of UVs for aoMap and lightMap
     geometry.setAttribute("uv2", geometry.attributes.uv);
 
     // Textures
-    geometry.attributes.uv1 = geometry.attributes.uv;
-
-    // Textures
-    const [map, normalMap, ormMap, envMap] = await Promise.all([
+    const [map, normalMap, ormMap] = await Promise.all([
       loadTexture("./textures/pbr/pitted_metal_basecolor.jpg"),
       loadTexture("./textures/pbr/pitted_metal_normal.jpg"),
-      loadTexture("./textures/pbr/pitted_metal_orm.jpg"),
-      loadEnvironmentTexture("./textures/env/jewelry_black_contrast.jpg")
+      loadTexture("./textures/pbr/pitted_metal_orm.jpg")
     ]);
 
     map.anisotropy = anisotropy;
-    map.wrapS = RepeatWrapping;
-    map.wrapT = RepeatWrapping;
-    map.repeat.set(2, 1);
-
     normalMap.anisotropy = anisotropy;
-    normalMap.wrapS = RepeatWrapping;
-    normalMap.wrapT = RepeatWrapping;
-    normalMap.repeat.set(2, 1);
-
     ormMap.anisotropy = anisotropy;
-    ormMap.wrapS = RepeatWrapping;
-    ormMap.wrapT = RepeatWrapping;
-    ormMap.repeat.set(2, 1);
 
     const material = new MeshStandardMaterial({
       name: name,
-      color: new Color(0x8080ff).offsetHSL(0, 0, -0.75),
-      metalness: 9,
+      color: new Color().offsetHSL(0, 0, -0.85),
+      metalness: 0.5,
       roughness: 0.9,
       map,
       metalnessMap: ormMap,
@@ -116,12 +86,16 @@ class _ extends Group {
       aoMap: ormMap,
       aoMapIntensity: 1,
       normalMap,
-      normalScale: new Vector2(3, 3),
-      envMap,
-      envMapIntensity: 18
+      normalScale: new Vector2(1, 1),
+      flatShading: true,
+      polygonOffset: true,
+      polygonOffsetFactor: 1,
+      polygonOffsetUnits: 1
     });
 
     const mesh = new Mesh(geometry, material);
+    mesh.rotation.x = MathUtils.degToRad(-45);
+    mesh.rotation.z = MathUtils.degToRad(-45);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.name = name;
@@ -129,16 +103,39 @@ class _ extends Group {
     // Layers
     mesh.layers.enable(layers.velocity);
 
+    this.mesh = mesh;
+
+    // Decals
+    this.renderDecal(
+      "./discoshark.svg",
+      new Vector3(0, 0.7, 0),
+      new Vector3(0.5, 1, 0.5),
+      new Euler(MathUtils.degToRad(-90), 0, 0),
+      false
+    );
+
+    this.add(mesh);
+  }
+
+  renderDecal(
+    url: string,
+    position?: Vector3,
+    scale?: Vector3,
+    rotation?: Euler,
+    bothSides?: boolean
+  ): void {
+    if (!this.mesh) return;
+
     // Load SVG logo texture
     const textureLoader = new TextureLoader();
-    const logoTexture = await textureLoader.loadAsync("/framework.svg");
+    const logoTexture = textureLoader.load(url);
 
     // Create a decal geometry for the logo
-    const decalSize = new Vector3(0.7, 0.6, 0.6); // Adjust size as needed
-    const decalPosition = new Vector3(0, 0, 0.4); // Position the decal on the surface of the sphere
-    const decalRotation = new Euler(0, 0, 0);
+    const decalSize = scale || new Vector3(0.5, 0.5, 0.5); // Adjust size as needed
+    const decalPosition = position || new Vector3(0, 0, 0.6); // Position the decal on the surface of the box
+    const decalRotation = rotation || new Euler(0, 0, 0);
 
-    const decalGeometry = new DecalGeometry(mesh, decalPosition, decalRotation, decalSize);
+    const decalGeometry = new DecalGeometry(this.mesh, decalPosition, decalRotation, decalSize);
 
     const decalMaterial = new MeshStandardMaterial({
       map: logoTexture,
@@ -148,15 +145,14 @@ class _ extends Group {
     });
 
     const logoMesh = new Mesh(decalGeometry, decalMaterial);
-    const logoClone = logoMesh.clone();
-    logoClone.rotation.y = Math.PI;
+    this.mesh.add(logoMesh);
 
-    mesh.add(logoMesh);
-    mesh.add(logoClone);
-    this.add(mesh);
+    if (bothSides) {
+      const logoClone = logoMesh.clone();
+      logoClone.rotation.y = Math.PI;
 
-    this.mesh = mesh;
-    this.logoMesh = logoMesh;
+      this.mesh.add(logoClone);
+    }
   }
 
   // Public methods
@@ -169,7 +165,7 @@ class _ extends Group {
       this.camera.lookAt(this.position.x, this.position.y, 0);
       this.camera.zoom = 1;
     } else {
-      this.camera.lookAt(this.position.x - 1.4, this.position.y, 0);
+      this.camera.lookAt(this.position.x - 1.2, this.position.y, 0);
       this.camera.zoom = 1.5;
     }
 
@@ -177,9 +173,8 @@ class _ extends Group {
   }
 
   public update(): void {
-    if (!this.mesh) return;
-    // Counter clockwise rotation
-    this.mesh.rotation.y += 0.0025 * params.speed;
+    if (!params.animate || !this.mesh) return;
+    this.mesh.rotation.x -= 0.0025 * params.speed;
   }
 }
 

@@ -30,7 +30,7 @@ const params = {
   speed: 1
 };
 
-const name = "Packaging";
+const name = "Branded Packaging";
 
 class _ extends Group {
   private camera?: PerspectiveCamera;

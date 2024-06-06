@@ -17,9 +17,9 @@ class ScenePanelController {
   }
 
   static initPanel(): void {
-    const { darkPlanet, abstractCube } = this.view;
+    const { darkPlanet, floatingCrystal, abstractCube } = this.view;
 
-    const objects = [darkPlanet, darkPlanet, abstractCube]; // temporary to hide discoshark hover state
+    const objects = [abstractCube, floatingCrystal, darkPlanet]; // temporary to hide discoshark hover state
     objects.forEach((object, index) => {
       if (object) {
         object.point = new Point3D(object.mesh, {
@@ -45,10 +45,8 @@ class ScenePanelController {
 
     if (data && data.path) {
       const path = Router.getPath(data.path);
-      // get the base Url
-      const base = window.location.href.split("/").slice(0, 3).join("/");
 
-      Router.setPath(base + path.slice(1));
+      Router.setPath(`${path}/`);
       Point3D.animateOut();
     }
   };
