@@ -49,13 +49,13 @@ class _ {
     if (this.view.resize) this.view.resize(width, height);
   };
 
-  static update = (time: number): void => {
+  static update = (): void => {
     if (!this.view.visible) {
       return;
     }
 
     if (params.animate || !this.animatedOneFramePast) {
-      if (this.view.update) this.view.update(time);
+      if (this.view.update) this.view.update();
       this.animatedOneFramePast = !params.animate;
     }
   };

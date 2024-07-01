@@ -168,7 +168,7 @@ class Canvas {
   static onUpdate = (time: number, delta: number, frame: number) => {
     WorldController.update(time, delta, frame);
     CameraController.update();
-    SceneController.update(time);
+    SceneController.update();
     RenderManager.update();
     PanelController.update(time);
     this.ui.update();
