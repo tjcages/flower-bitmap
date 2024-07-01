@@ -38,6 +38,7 @@ class _ extends Group {
     this.scale.multiplyScalar(20);
 
     this.rotation.x = MathUtils.degToRad(-135);
+    this.rotation.y = MathUtils.degToRad(180);
 
     this.initCamera();
   }
@@ -63,7 +64,7 @@ class _ extends Group {
       name: name,
       color: 0xa3a3a3, // light silver
       metalness: 1,
-      roughness: 0.1
+      roughness: 0
     });
     mesh.name = name;
 
