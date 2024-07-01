@@ -42,7 +42,7 @@ class PanelController {
     Point3D.init(scene, camera, {
       root: Stage,
       container: this.ui,
-      debug: false
+      debug: true
     });
   }
 

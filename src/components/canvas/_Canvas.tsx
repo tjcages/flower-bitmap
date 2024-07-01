@@ -85,19 +85,19 @@ class Canvas {
     });
 
     // Landing and 404 page
-    let home;
+    // let home;
 
-    if (!navigator.maxTouchPoints) {
-      home = {
-        path: "/",
-        title: "Framework x Totem"
-      };
+    // if (!navigator.maxTouchPoints) {
+    const home = {
+      path: "/",
+      title: "Framework x Totem"
+    };
 
-      Data.pages.push(home);
-      Data.pageIndex = Data.pages.length - 1;
-    } else {
-      home = Data.pages[0]; // Dark Planet
-    }
+    Data.pages.push(home);
+    Data.pageIndex = Data.pages.length - 1;
+    // } else {
+    //   home = Data.pages[0]; // Dark Planet
+    // }
 
     Router.add("/", Page, home);
     Router.add("404", Page, home);

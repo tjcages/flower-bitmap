@@ -2,13 +2,16 @@
 
 import { Group } from "three";
 
-import { Cube, Floor, Player, Shark } from "@/components/canvas/objects";
+import { Cube, Floor, Player, Shark, Slant } from "@/components/canvas/objects";
 
 class SceneView extends Group {
   floor?: Floor;
   darkPlanet?: Player;
   floatingCrystal?: Shark;
   abstractCube?: Cube;
+  slant?: Slant;
+
+  objects?: (Player | Slant | Shark)[];
 
   constructor() {
     super();
@@ -19,41 +22,71 @@ class SceneView extends Group {
   }
 
   initViews() {
-    this.floor = new Floor();
-    this.add(this.floor);
+    // this.floor = new Floor();
+    // this.add(this.floor);
 
-    this.darkPlanet = new Player();
-    this.add(this.darkPlanet);
+    const player = new Player();
+    this.add(player);
 
-    this.floatingCrystal = new Shark();
-    this.add(this.floatingCrystal);
+    const slant = new Slant({
+      position: {
+        y: -1.25,
+        z: 0.75
+      },
+      rotation: {
+        x: 45
+      },
+      color: "#666463"
+    });
+    this.add(slant);
 
-    this.abstractCube = new Cube();
-    this.add(this.abstractCube);
+    const slant2 = new Slant({
+      position: {
+        y: 1.3,
+        z: 0.4
+      },
+      rotation: {
+        x: -70
+      },
+      color: "#E2E2E2"
+    });
+    this.add(slant2);
+
+    const video = new Slant({
+      position: {
+        y: 0,
+        z: 0.225
+      },
+      rotation: {
+        x: 90,
+        y: 180
+      },
+      scale: {
+        x: 0.8,
+        z: 0.8
+      },
+      color: "#F4F4F4"
+    });
+    this.add(video);
+
+    const knob = new Shark();
+    this.add(knob);
+
+    this.objects = [player, slant, slant2, video, knob];
   }
 
   // Public methods
 
   resize = (width: number, height: number): void => {
-    if (this.floor) this.floor.resize(width, height);
-    if (this.darkPlanet) this.darkPlanet.resize(width, height);
-    if (this.floatingCrystal) this.floatingCrystal.resize(width, height);
-    if (this.abstractCube) this.abstractCube.resize(width, height);
+    this.objects?.forEach(object => object.resize(width, height));
   };
 
-  update = (time: number): void => {
-    if (this.darkPlanet) this.darkPlanet.update();
-    if (this.floatingCrystal) this.floatingCrystal.update(time);
-    if (this.abstractCube) this.abstractCube.update();
+  update = (): void => {
+    this.objects?.forEach(object => object.update());
   };
 
   ready = (): Promise<void[]> =>
-    Promise.all([
-      this.floor?.initMesh(),
-      this.darkPlanet?.initMesh(),
-      this.floatingCrystal?.initMesh(),
-      this.abstractCube?.initMesh()
-    ]);
+    this.objects ? Promise.all(this.objects.map(object => object.initMesh())) : Promise.resolve([]);
 }
 
 export default SceneView;

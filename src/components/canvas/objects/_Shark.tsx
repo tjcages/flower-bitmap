@@ -1,7 +1,7 @@
 "use client";
 
 import { Point3D } from "@alienkitty/alien.js/all/three";
-import { Group, Mesh, MeshStandardMaterial, PerspectiveCamera, Vector3 } from "three";
+import { Group, MathUtils, Mesh, MeshStandardMaterial, PerspectiveCamera, Vector3 } from "three";
 
 import { WorldController } from "@/components/canvas/world";
 
@@ -33,7 +33,11 @@ class _ extends Group {
   constructor() {
     super();
 
-    this.position.setY(0.7);
+    this.position.z = 0.6;
+    this.position.y = -1;
+    this.scale.multiplyScalar(20);
+
+    this.rotation.x = MathUtils.degToRad(-135);
 
     this.initCamera();
   }
@@ -49,7 +53,7 @@ class _ extends Group {
   public async initMesh(): Promise<void> {
     const { loadGLTF } = WorldController;
 
-    const gltf = await loadGLTF("/objects/shark.glb");
+    const gltf = await loadGLTF("/objects/knob.glb");
     const model = gltf.scene.children[0] as Mesh;
 
     // Crystal mesh
@@ -95,10 +99,8 @@ class _ extends Group {
     this.camera.updateProjectionMatrix();
   }
 
-  public update(time: number): void {
+  public update(): void {
     if (!params.animate || !this.group) return;
-    this.group.position.setY((-15 + Math.sin(time * params.speed)) * 0.1);
-    this.group.rotation.y += 0.005 * params.speed;
   }
 }
 

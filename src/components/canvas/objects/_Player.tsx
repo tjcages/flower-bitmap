@@ -10,9 +10,9 @@ import {
   Mesh,
   MeshStandardMaterial,
   PerspectiveCamera,
-  TextureLoader,
   Vector2,
-  Vector3
+  Vector3,
+  VideoTexture
 } from "three";
 import { DecalGeometry } from "three/examples/jsm/geometries/DecalGeometry";
 
@@ -40,7 +40,7 @@ class _ extends Group {
   constructor() {
     super();
 
-    this.position.x = 2.5;
+    this.position.x = 0;
     this.position.z = 0.2;
 
     this.initCamera();
@@ -50,7 +50,7 @@ class _ extends Group {
     this.camera = new PerspectiveCamera(30);
     this.camera.near = 0.5;
     this.camera.far = 40;
-    this.camera.position.z = 8;
+    this.camera.position.z = 2;
     this.camera.lookAt(this.position.x - 1.2, this.position.y, 0);
     this.camera.zoom = 1.5;
     this.camera.matrixAutoUpdate = false;
@@ -59,7 +59,7 @@ class _ extends Group {
   public async initMesh(): Promise<void> {
     const { anisotropy, loadTexture } = WorldController;
 
-    const geometry = new BoxGeometry(0.85, 0.05, 1.35);
+    const geometry = new BoxGeometry(1.35, 0.05, 1.35);
 
     // Second set of UVs for aoMap and lightMap
     geometry.setAttribute("uv2", geometry.attributes.uv);
@@ -77,8 +77,8 @@ class _ extends Group {
 
     const material = new MeshStandardMaterial({
       name: name,
-      color: new Color().offsetHSL(0, 0, -0.85),
-      metalness: 0.5,
+      color: new Color("#989898"),
+      metalness: 0,
       roughness: 0.9,
       map,
       metalnessMap: ormMap,
@@ -94,8 +94,8 @@ class _ extends Group {
     });
 
     const mesh = new Mesh(geometry, material);
-    mesh.rotation.x = MathUtils.degToRad(80);
-    mesh.rotation.z = MathUtils.degToRad(45);
+    mesh.rotation.x = MathUtils.degToRad(90);
+    mesh.rotation.z = MathUtils.degToRad(0);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.name = name;
@@ -107,9 +107,9 @@ class _ extends Group {
 
     // Decals
     this.renderDecal(
-      "./player.svg",
+      "./example.mov", // Change this to your video file path
       new Vector3(0, 0.2, 0),
-      new Vector3(0.8, 1.3, 1),
+      new Vector3(1, 1, 1),
       new Euler(MathUtils.degToRad(-90), 0, 0),
       false
     );
@@ -127,11 +127,19 @@ class _ extends Group {
   ): void {
     if (!this.mesh) return;
 
-    // Load SVG logo texture
-    const textureLoader = new TextureLoader();
-    const logoTexture = textureLoader.load(url);
+    // Create video element
+    const video = document.createElement("video");
+    video.src = url;
+    video.load();
+    video.loop = true;
+    video.playsInline = true;
+    video.muted = true;
+    video.play();
 
-    // Create a decal geometry for the logo
+    // Create VideoTexture
+    const videoTexture = new VideoTexture(video);
+
+    // Create a decal geometry for the video
     const decalSize = scale || new Vector3(0.5, 0.5, 0.5); // Adjust size as needed
     const decalPosition = position || new Vector3(0, 0, 0.6); // Position the decal on the surface of the box
     const decalRotation = rotation || new Euler(0, 0, 0);
@@ -139,20 +147,20 @@ class _ extends Group {
     const decalGeometry = new DecalGeometry(this.mesh, decalPosition, decalRotation, decalSize);
 
     const decalMaterial = new MeshStandardMaterial({
-      map: logoTexture,
+      map: videoTexture,
       transparent: true,
       depthTest: false,
       depthWrite: false
     });
 
-    const logoMesh = new Mesh(decalGeometry, decalMaterial);
-    this.mesh.add(logoMesh);
+    const videoMesh = new Mesh(decalGeometry, decalMaterial);
+    this.mesh.add(videoMesh);
 
     if (bothSides) {
-      const logoClone = logoMesh.clone();
-      logoClone.rotation.y = Math.PI;
+      const videoClone = videoMesh.clone();
+      videoClone.rotation.y = Math.PI;
 
-      this.mesh.add(logoClone);
+      this.mesh.add(videoClone);
     }
   }
 
@@ -177,7 +185,7 @@ class _ extends Group {
     if (!params.animate || !this.mesh) return;
     // rotate between -45 & 45 degrees
 
-    this.mesh.rotation.x += Math.sin(Date.now() * 0.001) * 0.0025 * params.speed;
+    // this.mesh.rotation.x -= Math.sin(Date.now() * 0.001) * 0.0025 * params.speed;
   }
 }
 

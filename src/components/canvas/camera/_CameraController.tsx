@@ -9,7 +9,6 @@ import {
   lerpCameras,
   tween
 } from "@alienkitty/alien.js/all/three";
-import { isMobile, isSafari, isTablet } from "react-device-detect";
 
 import { Circle, Cube, Shark } from "@/components/canvas/objects";
 import { Data } from "@/components/canvas/page";
@@ -159,13 +158,15 @@ class CameraController {
   // Public methods
 
   static setView = (view?: View) => {
-    if (!(isMobile || isTablet || isSafari) && (!view || view === this.next)) {
-      this.next = this;
-      this.zoomedIn = false;
-    } else {
-      this.next = view;
-      this.zoomedIn = true;
-    }
+    this.next = this;
+    this.zoomedIn = false;
+    // if (!(isMobile || isTablet || isSafari) && (!view || view === this.next)) {
+    //   this.next = this;
+    //   this.zoomedIn = false;
+    // } else {
+    //   this.next = view;
+    //   this.zoomedIn = true;
+    // }
 
     if (!this.animatedIn) {
       this.animatedIn = true;
@@ -184,9 +185,9 @@ class CameraController {
       return;
     }
 
-    this.target.x = this.origin.x + this.targetXY.x * this.mouse.x;
-    this.target.y = this.origin.y + this.targetXY.y * this.mouse.y;
-    this.target.z = this.origin.z;
+    this.target.x = this.origin.x + this.targetXY.x * this.mouse.x * 0.1;
+    this.target.y = this.targetXY.y * this.mouse.y * 0.1;
+    this.target.z = this.origin.z - 3.6;
 
     this.camera.position.lerp(this.target, this.lerpSpeed);
     this.camera.lookAt(this.lookAt);
