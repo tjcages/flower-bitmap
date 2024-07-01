@@ -153,7 +153,6 @@ class Canvas {
   }
 
   // Event handlers
-
   static onResize = () => {
     const width = document.documentElement.clientWidth;
     const height = document.documentElement.clientHeight;
