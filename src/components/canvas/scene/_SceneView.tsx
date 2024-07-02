@@ -11,7 +11,7 @@ class SceneView extends Group {
   abstractCube?: Cube;
   slant?: Slant;
 
-  objects?: (Player | Slant | Shark)[];
+  objects?: (Player | Slant | Shark | Floor)[];
 
   constructor() {
     super();
@@ -22,57 +22,13 @@ class SceneView extends Group {
   }
 
   initViews() {
-    // this.floor = new Floor();
-    // this.add(this.floor);
+    const floor = new Floor();
+    this.add(floor);
 
     const player = new Player();
     this.add(player);
 
-    const slant = new Slant({
-      position: {
-        y: -1.25,
-        z: 0.75
-      },
-      rotation: {
-        x: 45
-      },
-      color: "#666463"
-    });
-    this.add(slant);
-
-    const slant2 = new Slant({
-      position: {
-        y: 1.3,
-        z: 0.4
-      },
-      rotation: {
-        x: -70
-      },
-      color: "#E2E2E2"
-    });
-    this.add(slant2);
-
-    const video = new Slant({
-      position: {
-        y: 0,
-        z: 0.225
-      },
-      rotation: {
-        x: 90,
-        y: 180
-      },
-      scale: {
-        x: 0.8,
-        z: 0.8
-      },
-      color: "#F4F4F4"
-    });
-    this.add(video);
-
-    const knob = new Shark();
-    this.add(knob);
-
-    this.objects = [player, slant, slant2, video, knob];
+    this.objects = [floor, player];
   }
 
   // Public methods

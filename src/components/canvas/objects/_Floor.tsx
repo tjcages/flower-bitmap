@@ -136,6 +136,8 @@ class _ extends Group {
 
   // Public methods
 
+  public update(): void {}
+
   public resize(width: number, height: number): void {
     height = 1024;
 

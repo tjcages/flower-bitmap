@@ -77,8 +77,8 @@ class _ extends Group {
 
     const material = new MeshStandardMaterial({
       name: name,
-      color: new Color("#989898"),
-      metalness: 0,
+      color: new Color("#111111"),
+      metalness: 0.6,
       roughness: 0.9,
       map,
       metalnessMap: ormMap,
@@ -109,7 +109,7 @@ class _ extends Group {
     this.renderDecal(
       "./example.mov", // Change this to your video file path
       new Vector3(0, 0.2, 0),
-      new Vector3(1, 1, 1),
+      new Vector3(1.3, 1.3, 1),
       new Euler(MathUtils.degToRad(-90), 0, 0),
       false
     );

@@ -187,7 +187,7 @@ class CameraController {
 
     this.target.x = this.origin.x + this.targetXY.x * this.mouse.x * 0.1;
     this.target.y = this.targetXY.y * this.mouse.y * 0.1;
-    this.target.z = this.origin.z - 3.6;
+    this.target.z = this.origin.z;
 
     this.camera.position.lerp(this.target, this.lerpSpeed);
     this.camera.lookAt(this.lookAt);
