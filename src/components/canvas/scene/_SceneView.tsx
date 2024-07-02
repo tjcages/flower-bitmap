@@ -11,7 +11,7 @@ class SceneView extends Group {
   abstractCube?: Cube;
   slant?: Slant;
 
-  objects?: (Player | Slant | Shark | Floor)[];
+  objects: (Player | Slant | Shark | Floor)[] = [];
 
   constructor() {
     super();
@@ -23,12 +23,24 @@ class SceneView extends Group {
 
   initViews() {
     const floor = new Floor();
-    this.add(floor);
+    this.objects.push(floor);
 
-    const player = new Player();
-    this.add(player);
+    const player = new Player({
+      position: { x: 0, y: 0, z: 1 }
+    });
+    this.objects.push(player);
 
-    this.objects = [floor, player];
+    const player2 = new Player({
+      position: { x: 1, y: 1.5, z: -6 }
+    });
+    this.objects.push(player2);
+
+    const player3 = new Player({
+      position: { x: -2, y: 3, z: -12 }
+    });
+    this.objects.push(player3);
+
+    this.objects.reverse().map(obj => this.add(obj));
   }
 
   // Public methods
