@@ -3,20 +3,18 @@
 import {
   EnvironmentTextureLoader,
   GLTFLoader,
+  OrbitControls,
   TextureLoader,
   getFullscreenTriangle
 } from "@alienkitty/alien.js/all/three";
 import {
-  BasicShadowMap,
   Color,
   ColorManagement,
   DirectionalLight,
-  Fog,
   HemisphereLight,
   LinearSRGBColorSpace,
   PerspectiveCamera,
   Scene,
-  Texture,
   Vector2,
   WebGLRenderer
 } from "three";
@@ -24,11 +22,18 @@ import { DRACOLoader } from "three-stdlib";
 // @ts-expect-error - no types available
 import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
 
+const layers = {
+  default: 0,
+  hologram: 1,
+  glow: 2
+};
+
 class WorldController {
   static renderer: WebGLRenderer;
   static element: HTMLCanvasElement;
-  static scene: Scene & { environmentIntensity: number };
+  static scene: Scene & { environmentIntensity?: number };
   static camera: PerspectiveCamera;
+  static controls: typeof OrbitControls;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static screenTriangle: any; // Define the correct type if available
   private static resolution: { value: Vector2 };
@@ -47,6 +52,7 @@ class WorldController {
     this.initLights();
     this.initLoaders();
     this.initEnvironment();
+    this.initControls();
 
     this.addListeners();
   }
@@ -65,20 +71,13 @@ class WorldController {
     // Output canvas
     this.element = this.renderer.domElement;
 
-    // Shadows
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = BasicShadowMap;
-
     // 3D scene
-    this.scene = new Scene() as Scene & { environmentIntensity: number };
-    this.scene.background = new Color(0x0e0e0e);
-
-    this.scene.fog = new Fog(0x0e0e0e, 1, 30); // Color, near, far
-
+    this.scene = new Scene();
+    this.scene.background = new Color(0x060606);
     this.camera = new PerspectiveCamera(30);
     this.camera.near = 0.5;
     this.camera.far = 40;
-    this.camera.position.set(0, 6, 8);
+    this.camera.position.z = 12;
     this.camera.lookAt(this.scene.position);
 
     // Global geometries
@@ -92,42 +91,49 @@ class WorldController {
     this.frame = { value: 0 };
 
     // Global settings
-    this.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
+    // this.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
   }
 
   static initLights() {
-    this.scene.add(new HemisphereLight(0x606060, 0x404040, 3));
+    const hemisphereLight = new HemisphereLight(0x606060, 0x404040, 3);
 
-    const light = new DirectionalLight(0xffffff, 8);
-    light.position.set(5, 5, 5);
-    light.castShadow = true;
-    light.shadow.mapSize.width = 2048;
-    light.shadow.mapSize.height = 2048;
-    this.scene.add(light);
+    const directionalLight = new DirectionalLight(0xffffff, 2);
+    directionalLight.position.set(0.6, 0.5, 1);
+
+    this.scene.add(hemisphereLight);
+    this.scene.add(directionalLight);
+
+    // Important: Make sure your lights are on!
+    hemisphereLight.layers.enable(layers.hologram);
+    directionalLight.layers.enable(layers.hologram);
+    hemisphereLight.layers.enable(layers.glow);
+    directionalLight.layers.enable(layers.glow);
   }
 
   static initLoaders() {
     this.textureLoader = new TextureLoader();
-    // this.textureLoader.cache = true;
-    this.textureLoader.setPath("/");
+    this.textureLoader.cache = true;
 
     this.gltfLoader = new GLTFLoader();
     const dracoloader = new DRACOLoader();
     dracoloader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
     this.gltfLoader.setDRACOLoader(dracoloader);
 
-    this.svgLoader = new SVGLoader();
-
     this.environmentLoader = new EnvironmentTextureLoader(this.renderer);
     this.environmentLoader.cache = true;
-    this.environmentLoader.setPath("/");
   }
 
   static async initEnvironment() {
     this.scene.environment = await this.loadEnvironmentTexture(
       "./textures/env/jewelry_black_contrast.jpg"
     );
-    this.scene.environmentIntensity = 1.2;
+    this.scene.environmentIntensity = 0.5;
+  }
+
+  static initControls() {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableDamping = true;
+    // this.controls.enableZoom = false;
   }
 
   static addListeners() {
@@ -136,13 +142,22 @@ class WorldController {
 
   // Event handlers
 
-  static onTouchStart = (e: TouchEvent) => {
+  static onTouchStart = (e: { preventDefault: () => void }) => {
     e.preventDefault();
   };
 
   // Public methods
 
   static resize = (width: number, height: number, dpr: number) => {
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+
+    if (width < height) {
+      this.camera.position.z = 14;
+    } else {
+      this.camera.position.z = 12;
+    }
+
     width = Math.round(width * dpr);
     height = Math.round(height * dpr);
 
@@ -154,18 +169,17 @@ class WorldController {
   static update = (time: number, delta: number, frame: number) => {
     this.time.value = time;
     this.frame.value = frame;
+
+    this.controls.update();
   };
 
   // Global handlers
 
-  static getTexture = (path: string, callback?: (texture: Texture) => void) =>
-    this.textureLoader.load(path, callback);
+  static getTexture = (path: string, callback: void) => this.textureLoader.load(path, callback);
 
   static loadTexture = (path: string) => this.textureLoader.loadAsync(path);
 
   static loadGLTF = (path: string) => this.gltfLoader.loadAsync(path);
-
-  static loadSVG = (path: string) => this.svgLoader.loadAsync(path);
 
   static loadEnvironmentTexture = (path: string) => this.environmentLoader.loadAsync(path);
 }
