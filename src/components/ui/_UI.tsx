@@ -28,20 +28,15 @@ const _ = () => {
   });
 
   return (
-    <div className="fixed w-full h-full flex items-end justify-center p-4 md:p-[5vh] text-white uppercase pointer-events-none">
-      <div ref={ref} className="flex flex-col items-center justify-center gap-2">
-        <h1 className="flex items-center">
-          Framework <span className="opacity-50">x</span> Totem
-        </h1>
-        <h1 className="text-xs text-center max-w-lg">
-          Initial Commitment: 100 DiscoShark Units
+    <div className="fixed w-full h-full flex items-end justify-start p-4 md:p-[2.5vh] text-white uppercase pointer-events-none">
+      <div ref={ref} className="flex flex-col items-start justify-start gap-2">
+        <h3 className="fs-3">A$AP ROCKY</h3>
+        <h1 className="fs-1">
+          DON&apos;T
           <br />
-          Live Spotify Playlist
+          BE
           <br />
-          Custom Framework Packaging
-          <br />
-          (optional) Custom Event Stickers
-          <br />
+          DUMB
         </h1>
       </div>
       <Image

@@ -3,6 +3,7 @@
 import {
   EnvironmentTextureLoader,
   GLTFLoader,
+  OrbitControls,
   TextureLoader,
   getFullscreenTriangle
 } from "@alienkitty/alien.js/all/three";
@@ -29,6 +30,7 @@ class WorldController {
   static element: HTMLCanvasElement;
   static scene: Scene & { environmentIntensity: number };
   static camera: PerspectiveCamera;
+  static controls: typeof OrbitControls;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static screenTriangle: any; // Define the correct type if available
   private static resolution: { value: Vector2 };
@@ -47,7 +49,7 @@ class WorldController {
     this.initLights();
     this.initLoaders();
     this.initEnvironment();
-
+    this.initControls();
     this.addListeners();
   }
 
@@ -78,7 +80,7 @@ class WorldController {
     this.camera = new PerspectiveCamera(30);
     this.camera.near = 0.5;
     this.camera.far = 40;
-    this.camera.position.set(0, 6, 8);
+    this.camera.position.set(0, 1, 4);
     this.camera.lookAt(this.scene.position);
 
     // Global geometries
@@ -109,7 +111,7 @@ class WorldController {
   static initLoaders() {
     this.textureLoader = new TextureLoader();
     // this.textureLoader.cache = true;
-    this.textureLoader.setPath("/");
+    // this.textureLoader.setPath("/");
 
     this.gltfLoader = new GLTFLoader();
     const dracoloader = new DRACOLoader();
@@ -130,6 +132,12 @@ class WorldController {
     this.scene.environmentIntensity = 1.2;
   }
 
+  static initControls() {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableDamping = true;
+    // this.controls.enableZoom = false;
+  }
+
   static addListeners() {
     this.renderer.domElement.addEventListener("touchstart", this.onTouchStart);
   }
@@ -143,6 +151,15 @@ class WorldController {
   // Public methods
 
   static resize = (width: number, height: number, dpr: number) => {
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+
+    if (width < height) {
+      this.camera.position.z = 7;
+    } else {
+      this.camera.position.z = 5;
+    }
+
     width = Math.round(width * dpr);
     height = Math.round(height * dpr);
 
@@ -154,6 +171,7 @@ class WorldController {
   static update = (time: number, delta: number, frame: number) => {
     this.time.value = time;
     this.frame.value = frame;
+    this.controls.update();
   };
 
   // Global handlers

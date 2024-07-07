@@ -35,10 +35,11 @@ class _ extends Group {
 
     this.position.z = 0.6;
     this.position.y = -1;
-    this.scale.multiplyScalar(20);
+    this.scale.multiplyScalar(1);
 
-    this.rotation.x = MathUtils.degToRad(-135);
-    this.rotation.y = MathUtils.degToRad(180);
+    this.rotation.x = MathUtils.degToRad(180);
+    this.rotation.y = MathUtils.degToRad(0);
+    this.rotation.z = MathUtils.degToRad(180);
 
     this.initCamera();
   }
@@ -54,8 +55,10 @@ class _ extends Group {
   public async initMesh(): Promise<void> {
     const { loadGLTF } = WorldController;
 
-    const gltf = await loadGLTF("/objects/knob.glb");
+    const gltf = await loadGLTF("/objects/shark.glb");
     const model = gltf.scene.children[0] as Mesh;
+
+    console.log(model);
 
     // Crystal mesh
     const mesh = model.children[0] as Mesh;

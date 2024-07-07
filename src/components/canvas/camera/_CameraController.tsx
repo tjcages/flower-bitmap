@@ -12,7 +12,6 @@ import {
 
 import { Circle, Cube, Shark } from "@/components/canvas/objects";
 import { Data } from "@/components/canvas/page";
-import { RenderManager } from "@/components/canvas/render";
 
 interface WorldCamera {
   clone: () => WorldCamera;
@@ -128,11 +127,11 @@ class CameraController {
         this.ui.details.animateIn();
       });
 
-      RenderManager.zoomIn();
+      // RenderManager.zoomIn();
     } else {
       this.ui.details.animateOut();
 
-      RenderManager.zoomOut();
+      // RenderManager.zoomOut();
     }
   }
 

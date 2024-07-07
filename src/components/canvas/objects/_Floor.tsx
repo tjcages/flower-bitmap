@@ -24,18 +24,18 @@ class _ extends Group {
   }
 
   private initReflector(): void {
-    this.reflector = new Reflector({ blurIterations: 6 });
+    this.reflector = new Reflector({ blurIterations: 8 });
   }
 
   public async initMesh(): Promise<void> {
-    const geometry = new PlaneGeometry(100, 100);
+    const geometry = new PlaneGeometry(50, 50);
 
     const { loadTexture } = WorldController;
 
     const map = await loadTexture("./textures/waterdudv.jpg");
     map.wrapS = RepeatWrapping;
     map.wrapT = RepeatWrapping;
-    map.repeat.set(6, 3);
+    map.repeat.set(5, 3);
 
     const material = new ShadowMaterial({
       transparent: false,
@@ -116,7 +116,7 @@ class _ extends Group {
     };
 
     const mesh = new Mesh(geometry, material);
-    mesh.position.y = -0.86;
+    mesh.position.y = -1.05;
     mesh.rotation.x = -Math.PI / 2;
     mesh.receiveShadow = true;
     mesh.add(this.reflector);

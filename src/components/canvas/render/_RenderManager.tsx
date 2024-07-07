@@ -94,12 +94,12 @@ class RenderManager {
     this.camera = camera;
 
     // Blur
-    this.blurFocus = isMobile || isTablet || isSafari ? 0.5 : 0.25;
-    this.blurRotation = isMobile || isTablet || isSafari ? 0 : MathUtils.degToRad(75);
-    this.blurFactor = 1;
+    this.blurFocus = isMobile || isTablet || isSafari ? 0.5 : 0.6;
+    this.blurRotation = isMobile || isTablet || isSafari ? 0 : MathUtils.degToRad(35);
+    this.blurFactor = 0.3;
 
     // Bloom
-    this.luminosityThreshold = 1;
+    this.luminosityThreshold = 0.9;
     this.luminositySmoothing = 1;
     this.bloomStrength = 0.97;
     this.bloomRadius = 0.3;
@@ -460,7 +460,7 @@ class RenderManager {
   }
 
   static start(): void {
-    this.blurFactor = 0;
+    this.blurFactor = 0.07;
   }
 
   public static zoomIn(): void {
@@ -474,7 +474,7 @@ class RenderManager {
   public static zoomOut(): void {
     clearTween(this.timeout);
 
-    tween(this, { blurFactor: 0 }, 300, "linear");
+    tween(this, { blurFactor: 0.3 }, 300, "linear");
   }
 }
 
