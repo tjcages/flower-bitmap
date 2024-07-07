@@ -30,6 +30,12 @@ const params = {
   speed: 1
 };
 
+type Props = {
+  position?: { x?: number; y?: number; z?: number };
+  rotation?: { x?: number; y?: number; z?: number };
+  scale?: { x?: number; y?: number; z?: number };
+};
+
 const name = "Bespoke Audio Player";
 
 class _ extends Group {
@@ -37,11 +43,28 @@ class _ extends Group {
   mesh?: Mesh;
   point?: typeof Point3D;
 
-  constructor() {
+  constructor({
+    position = { x: 0, y: 0, z: 0.2 },
+    rotation = { x: 90, y: 0, z: 0 },
+    scale = {
+      x: 1,
+      y: 1,
+      z: 1
+    }
+  }: Props) {
     super();
 
-    this.position.x = 0;
-    this.position.z = 0.2;
+    this.position.x = position.x || 0;
+    this.position.y = position.y || 0;
+    this.position.z = position.z || 0;
+
+    this.rotation.x = MathUtils.degToRad(rotation.x || 0);
+    this.rotation.y = MathUtils.degToRad(rotation.y || 0);
+    this.rotation.z = MathUtils.degToRad(rotation.z || 0);
+
+    this.scale.x = scale.x || 1;
+    this.scale.y = scale.y || 1;
+    this.scale.z = scale.z || 1;
 
     this.initCamera();
   }
@@ -94,8 +117,6 @@ class _ extends Group {
     });
 
     const mesh = new Mesh(geometry, material);
-    mesh.rotation.x = MathUtils.degToRad(90);
-    mesh.rotation.z = MathUtils.degToRad(0);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     mesh.name = name;
