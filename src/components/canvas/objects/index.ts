@@ -8,4 +8,4 @@ import Rugahand from "./_Rugahand";
 import Shark from "./_Shark";
 import Slant from "./_Slant";
 
-export { Cube, Shark, Circle, Floor, Player, Slant, Hologram, Jacket, Rugahand};
+export { Cube, Shark, Circle, Floor, Player, Slant, Hologram, Jacket, Rugahand };
