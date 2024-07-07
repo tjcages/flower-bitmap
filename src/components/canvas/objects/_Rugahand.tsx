@@ -71,9 +71,21 @@ class _ extends Group {
     const mesh = model as Mesh;
 
     // make material color white
-    mesh.material.color = new Color(0xe9e8e4);
-    mesh.material.metalness = 0.75;
-    mesh.material.roughness = 1;
+    if (mesh.material instanceof Array) {
+      mesh.material.forEach(material => {
+        if (material instanceof MeshStandardMaterial) {
+          material.color = new Color(0xe9e8e4);
+          material.metalness = 0.75;
+          material.roughness = 1;
+        }
+      });
+    } else {
+      if (mesh.material instanceof MeshStandardMaterial) {
+        mesh.material.color = new Color(0xe9e8e4);
+        mesh.material.metalness = 0.75;
+        mesh.material.roughness = 1;
+      }
+    }
 
     mesh.name = name;
 
