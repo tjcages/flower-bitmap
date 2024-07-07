@@ -11,6 +11,7 @@ import {
   Color,
   ColorManagement,
   DirectionalLight,
+  Fog,
   HemisphereLight,
   LinearSRGBColorSpace,
   PerspectiveCamera,
@@ -21,12 +22,6 @@ import {
 import { DRACOLoader } from "three-stdlib";
 // @ts-expect-error - no types available
 import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
-
-const layers = {
-  default: 0,
-  hologram: 1,
-  glow: 2
-};
 
 class WorldController {
   static renderer: WebGLRenderer;
@@ -71,8 +66,11 @@ class WorldController {
     this.element = this.renderer.domElement;
 
     // 3D scene
-    this.scene = new Scene();
-    this.scene.background = new Color(0x060606);
+    this.scene = new Scene() as Scene & { environmentIntensity: number };
+    this.scene.background = new Color(0x0e0e0e);
+
+    this.scene.fog = new Fog(0x0e0e0e, 1, 30); // Color, near, far
+
     this.camera = new PerspectiveCamera(30);
     this.camera.near = 0.5;
     this.camera.far = 40;
@@ -94,19 +92,14 @@ class WorldController {
   }
 
   static initLights() {
-    const hemisphereLight = new HemisphereLight(0x606060, 0x404040, 3);
+    this.scene.add(new HemisphereLight(0x606060, 0x404040, 3));
 
-    const directionalLight = new DirectionalLight(0xffffff, 2);
-    directionalLight.position.set(0.6, 0.5, 1);
-
-    this.scene.add(hemisphereLight);
-    this.scene.add(directionalLight);
-
-    // Important: Make sure your lights are on!
-    hemisphereLight.layers.enable(layers.hologram);
-    directionalLight.layers.enable(layers.hologram);
-    hemisphereLight.layers.enable(layers.glow);
-    directionalLight.layers.enable(layers.glow);
+    const light = new DirectionalLight(0xffffff, 8);
+    light.position.set(5, 5, 5);
+    light.castShadow = true;
+    light.shadow.mapSize.width = 2048;
+    light.shadow.mapSize.height = 2048;
+    this.scene.add(light);
   }
 
   static initLoaders() {
@@ -127,12 +120,6 @@ class WorldController {
       "./textures/env/jewelry_black_contrast.jpg"
     );
     this.scene.environmentIntensity = 0.5;
-  }
-
-  static initControls() {
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enableDamping = true;
-    // this.controls.enableZoom = false;
   }
 
   static initControls() {

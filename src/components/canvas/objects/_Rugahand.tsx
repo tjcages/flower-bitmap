@@ -73,7 +73,7 @@ class _ extends Group {
     // make material color white
     mesh.material.color = new Color(0xe9e8e4);
     mesh.material.metalness = 0.75;
-    mesh.material.roughness = 0.75;
+    mesh.material.roughness = 1;
 
     mesh.name = name;
 

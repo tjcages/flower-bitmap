@@ -71,7 +71,8 @@ class Canvas {
   }
 
   static initPanel() {
-    PanelController.init(this.view, this.ui);
+    const { camera } = WorldController;
+    PanelController.init(this.view, this.ui, camera);
   }
 
   static addListeners() {
