@@ -1,28 +1,9 @@
 "use client";
 
-import {
-  DisplayOptions,
-  MathUtils,
-  PanelItem,
-  Point3D,
-  Stage,
-  UI,
-  getKeyByValue
-} from "@alienkitty/alien.js/all/three";
+import { PanelItem, UI } from "@alienkitty/alien.js/all/three";
 
 import { RenderManager } from "@/components/canvas/render";
 import { SceneView } from "@/components/canvas/scene";
-import { WorldController } from "@/components/canvas/world";
-
-interface Params {
-  animate: boolean;
-  speed: number;
-}
-
-const params: Params = {
-  animate: true,
-  speed: 1
-};
 
 class PanelController {
   static view: SceneView;
@@ -32,41 +13,22 @@ class PanelController {
     this.view = view;
     this.ui = ui;
 
-    this.initControllers();
     this.initPanel();
-  }
-
-  static initControllers() {
-    const { scene, camera } = WorldController;
-
-    Point3D.init(scene, camera, {
-      root: Stage,
-      container: this.ui,
-      debug: true
-    });
   }
 
   static initPanel() {
     const {
-      motionBlur,
       hBlurMaterial,
       vBlurMaterial,
+      videoGlitchMaterial,
       luminosityMaterial,
       bloomCompositeMaterial,
-      compositeMaterial
+      caMaterial
     } = RenderManager;
 
-    const animateOptions = {
-      Off: false,
-      Animate: true
-    };
+    const { hologram } = this.view;
 
-    const debugOptions = {
-      Off: false,
-      Debug: true
-    };
-
-    const items: (typeof PanelItem)[] = [
+    const items = [
       {
         name: "FPS"
       },
@@ -74,119 +36,62 @@ class PanelController {
         type: "divider"
       },
       {
-        type: "list",
-        list: DisplayOptions,
-        value: getKeyByValue(DisplayOptions, RenderManager.display),
-        callback: (value: string) => {
-          RenderManager.display = DisplayOptions[value];
+        type: "slider",
+        name: "Fresnel",
+        min: 0,
+        max: 3,
+        step: 0.01,
+        value: hologram.uniforms.fresnelPower.value,
+        callback: (value: number) => {
+          hologram.uniforms.fresnelPower.value = value;
+        }
+      },
+      {
+        type: "slider",
+        name: "Glow",
+        min: 0,
+        max: 10,
+        step: 0.1,
+        value: hBlurMaterial.uniforms.uBluriness.value,
+        callback: (value: number) => {
+          hBlurMaterial.uniforms.uBluriness.value = value;
+          vBlurMaterial.uniforms.uBluriness.value = value;
         }
       },
       {
         type: "divider"
+      },
+      {
+        type: "slider",
+        name: "Distort",
+        min: 0,
+        max: 2,
+        step: 0.01,
+        value: videoGlitchMaterial.uniforms.uDistortion.value,
+        callback: (value: number) => {
+          videoGlitchMaterial.uniforms.uDistortion.value = value;
+        }
+      },
+      {
+        type: "slider",
+        name: "Distort2",
+        min: 0,
+        max: 1,
+        step: 0.01,
+        value: videoGlitchMaterial.uniforms.uDistortion2.value,
+        callback: (value: number) => {
+          videoGlitchMaterial.uniforms.uDistortion2.value = value;
+        }
       },
       {
         type: "slider",
         name: "Speed",
         min: 0,
-        max: 50,
-        step: 0.1,
-        value: params.speed,
-        callback: (value: number) => {
-          params.speed = value;
-        }
-      },
-      {
-        type: "list",
-        list: animateOptions,
-        value: getKeyByValue(animateOptions, params.animate),
-        callback: (value: keyof typeof animateOptions) => {
-          params.animate = animateOptions[value];
-          motionBlur.saveState = params.animate;
-        }
-      },
-      {
-        type: "divider"
-      },
-      {
-        type: "slider",
-        name: "Interp",
-        min: 0,
-        max: 1,
-        step: 0.01,
-        value: motionBlur.interpolateGeometry,
-        callback: (value: number) => {
-          motionBlur.interpolateGeometry = value;
-        }
-      },
-      {
-        type: "slider",
-        name: "Smear",
-        min: 0,
-        max: 4,
-        step: 0.02,
-        value: motionBlur.smearIntensity,
-        callback: (value: number) => {
-          motionBlur.smearIntensity = value;
-        }
-      },
-      {
-        type: "divider"
-      },
-      {
-        type: "slider",
-        name: "Focus",
-        min: 0,
-        max: 1,
-        step: 0.01,
-        value: RenderManager.blurFocus,
-        callback: (value: number) => {
-          hBlurMaterial.uniforms.uFocus.value = value;
-          vBlurMaterial.uniforms.uFocus.value = value;
-          compositeMaterial.uniforms.uFocus.value = value;
-        }
-      },
-      {
-        type: "slider",
-        name: "Rotate",
-        min: 0,
-        max: 360,
-        step: 0.3,
-        value: MathUtils.radToDeg(RenderManager.blurRotation),
-        callback: (value: number) => {
-          value = MathUtils.degToRad(value);
-          hBlurMaterial.uniforms.uRotation.value = value;
-          vBlurMaterial.uniforms.uRotation.value = value;
-          compositeMaterial.uniforms.uRotation.value = value;
-        }
-      },
-      {
-        type: "slider",
-        name: "Blur",
-        min: 0,
         max: 2,
         step: 0.01,
-        value: RenderManager.blurFactor,
+        value: videoGlitchMaterial.uniforms.uSpeed.value,
         callback: (value: number) => {
-          RenderManager.blurFactor = value;
-        }
-      },
-      {
-        type: "slider",
-        name: "Chroma",
-        min: 0,
-        max: 10,
-        step: 0.1,
-        value: compositeMaterial.uniforms.uDistortion.value,
-        callback: (value: number) => {
-          compositeMaterial.uniforms.uDistortion.value = value;
-        }
-      },
-      {
-        type: "list",
-        list: debugOptions,
-        value: getKeyByValue(debugOptions, vBlurMaterial.uniforms.uDebug.value),
-        callback: (value: string) => {
-          vBlurMaterial.uniforms.uDebug.value = debugOptions[value as keyof typeof debugOptions];
+          videoGlitchMaterial.uniforms.uSpeed.value = value;
         }
       },
       {
@@ -237,22 +142,60 @@ class PanelController {
           RenderManager.bloomRadius = value;
           bloomCompositeMaterial.uniforms.uBloomFactors.value = RenderManager.bloomFactors();
         }
+      },
+      {
+        type: "divider"
+      },
+      {
+        type: "slider",
+        name: "Red",
+        min: -4,
+        max: 4,
+        step: 0.05,
+        value: caMaterial.uniforms.uRedOffset.value,
+        callback: (value: number) => {
+          caMaterial.uniforms.uRedOffset.value = value;
+        }
+      },
+      {
+        type: "slider",
+        name: "Green",
+        min: -4,
+        max: 4,
+        step: 0.05,
+        value: caMaterial.uniforms.uGreenOffset.value,
+        callback: (value: number) => {
+          caMaterial.uniforms.uGreenOffset.value = value;
+        }
+      },
+      {
+        type: "slider",
+        name: "Blue",
+        min: -4,
+        max: 4,
+        step: 0.05,
+        value: caMaterial.uniforms.uBlueOffset.value,
+        callback: (value: number) => {
+          caMaterial.uniforms.uBlueOffset.value = value;
+        }
+      },
+      {
+        type: "slider",
+        name: "Int",
+        min: 0,
+        max: 3,
+        step: 0.01,
+        value: caMaterial.uniforms.uIntensity.value,
+        callback: (value: number) => {
+          caMaterial.uniforms.uIntensity.value = value;
+        }
       }
     ];
 
     items.forEach(data => {
-      const item = new PanelItem(data);
-      this.ui.addPanel(item);
+      this.ui.addPanel(new PanelItem(data));
     });
   }
-
-  // Public methods
-
-  static update = (time: number) => {
-    if (!this.ui) return;
-
-    Point3D.update(time);
-  };
 }
 
 export default PanelController;

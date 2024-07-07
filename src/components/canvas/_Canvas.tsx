@@ -1,26 +1,14 @@
 "use client";
 
-import {
-  AssetLoader,
-  Router,
-  Stage,
-  UI,
-  delayedCall,
-  ticker
-} from "@alienkitty/alien.js/all/three";
+import { ImageBitmapLoaderThread, Stage, Thread, UI, ticker } from "@alienkitty/alien.js/all/three";
 import { useEffect } from "react";
 
-import { CameraController } from "./camera";
-import { Data, Page } from "./page";
 import { PanelController } from "./panel";
 import { RenderManager } from "./render";
-import { SceneController, ScenePanelController, SceneView } from "./scene";
+import { SceneController, SceneView } from "./scene";
 import { WorldController } from "./world";
 
-const breakpoint = 1000;
-
 class Canvas {
-  private static assetLoader: typeof AssetLoader;
   private static view: SceneView;
   private static ui: typeof UI;
 
@@ -29,13 +17,9 @@ class Canvas {
   }
 
   static async init() {
-    this.initLoader();
+    this.initThread();
     this.initStage();
     this.initWorld();
-
-    await this.loadData();
-
-    this.initRouter();
     this.initViews();
     this.initControllers();
 
@@ -48,19 +32,15 @@ class Canvas {
       WorldController.environmentLoader.ready()
     ]);
 
-    delayedCall(1000, () => {
-      this.initPanel();
-    });
-
-    CameraController.start();
-    RenderManager.start();
+    this.initPanel();
 
     this.animateIn();
   }
 
-  static initLoader() {
-    this.assetLoader = new AssetLoader();
-    this.assetLoader.setPath("/");
+  static initThread() {
+    ImageBitmapLoaderThread.init();
+
+    Thread.shared();
   }
 
   static initStage() {
@@ -73,116 +53,52 @@ class Canvas {
     Stage.add(WorldController.element);
   }
 
-  static async loadData() {
-    const data = await this.assetLoader.loadData("./data/data.json");
-
-    Data.init(data);
-  }
-
-  static initRouter() {
-    Data.pages.forEach(page => {
-      Router.add(page.path, Page, page);
-    });
-
-    // Landing and 404 page
-    // let home;
-
-    // if (!navigator.maxTouchPoints) {
-    const home = {
-      path: "/",
-      title: "Framework x Totem"
-    };
-
-    Data.pages.push(home);
-    Data.pageIndex = Data.pages.length - 1;
-    // } else {
-    //   home = Data.pages[0]; // Dark Planet
-    // }
-
-    Router.add("/", Page, home);
-    Router.add("404", Page, home);
-
-    Router.init({ path: "" });
-
-    // if escape key is pressed go back to home
-    window.addEventListener("keydown", e => {
-      if (e.key === "Escape") {
-        Router.setPath("/");
-      }
-    });
-  }
-
   static initViews() {
     this.view = new SceneView();
     WorldController.scene.add(this.view);
 
-    this.ui = new UI({
-      fps: true,
-      breakpoint,
-      details: {
-        title: "",
-        content: /* html */ ``,
-        links: [
-          {
-            title: "Next"
-          }
-        ]
-      }
-    });
-    this.ui.link = this.ui.details.links[0];
+    this.ui = new UI({ fps: true });
+    this.ui.animateIn();
+
     Stage.add(this.ui);
   }
 
   static initControllers() {
     const { renderer, scene, camera } = WorldController;
 
-    CameraController.init(camera, this.ui);
     SceneController.init(this.view);
     RenderManager.init(renderer, scene, camera);
   }
 
   static initPanel() {
     PanelController.init(this.view, this.ui);
-    ScenePanelController.init(this.view);
   }
 
   static addListeners() {
     window.addEventListener("resize", this.onResize);
     ticker.add(this.onUpdate);
-    this.ui.link.events.on("click", this.onClick);
+    ticker.start();
   }
 
   // Event handlers
+
   static onResize = () => {
     const width = document.documentElement.clientWidth;
     const height = document.documentElement.clientHeight;
     const dpr = window.devicePixelRatio;
 
     WorldController.resize(width, height, dpr);
-    CameraController.resize(width, height);
-    SceneController.resize(width, height);
     RenderManager.resize(width, height, dpr);
   };
 
   static onUpdate = (time: number, delta: number, frame: number) => {
     WorldController.update(time, delta, frame);
-    CameraController.update();
-    SceneController.update();
     RenderManager.update();
-    PanelController.update(time);
     this.ui.update();
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static onClick = (e: MouseEvent, { target }: { target: { link: string } }) => {
-    e.preventDefault();
-
-    Router.setPath(target.link);
   };
 
   // Public methods
   static animateIn = () => {
-    CameraController.animateIn();
     SceneController.animateIn();
     this.ui.animateIn();
 
