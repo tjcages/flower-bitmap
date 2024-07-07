@@ -53,7 +53,6 @@ class WorldController {
     this.initLoaders();
     this.initEnvironment();
     this.initControls();
-
     this.addListeners();
   }
 
@@ -77,7 +76,7 @@ class WorldController {
     this.camera = new PerspectiveCamera(30);
     this.camera.near = 0.5;
     this.camera.far = 40;
-    this.camera.position.z = 12;
+    this.camera.position.set(0, 1, 4);
     this.camera.lookAt(this.scene.position);
 
     // Global geometries
@@ -136,6 +135,12 @@ class WorldController {
     // this.controls.enableZoom = false;
   }
 
+  static initControls() {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableDamping = true;
+    // this.controls.enableZoom = false;
+  }
+
   static addListeners() {
     this.renderer.domElement.addEventListener("touchstart", this.onTouchStart);
   }
@@ -153,9 +158,9 @@ class WorldController {
     this.camera.updateProjectionMatrix();
 
     if (width < height) {
-      this.camera.position.z = 14;
+      this.camera.position.z = 7;
     } else {
-      this.camera.position.z = 12;
+      this.camera.position.z = 5;
     }
 
     width = Math.round(width * dpr);
@@ -169,7 +174,6 @@ class WorldController {
   static update = (time: number, delta: number, frame: number) => {
     this.time.value = time;
     this.frame.value = frame;
-
     this.controls.update();
   };
 

@@ -95,6 +95,7 @@ class Canvas {
     WorldController.update(time, delta, frame);
     RenderManager.update();
     this.ui.update();
+    this.view.update();
   };
 
   // Public methods

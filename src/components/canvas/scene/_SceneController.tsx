@@ -16,6 +16,13 @@ class _ {
   };
 
   static ready = () => this.view.ready();
+
+  static update = (): void => {
+    if (!this.view.visible) {
+      return;
+    }
+    if (this.view.update) this.view.update();
+  };
 }
 
 export default _;

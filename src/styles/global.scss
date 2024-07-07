@@ -119,17 +119,20 @@
     margin: 0;
     padding: 0;
 
-    font-family: var(--font-swiss), serif;
-    line-height: 1em;
+    font-family: var(--font-moderat), serif;
+    line-height: 1em !important;
+  }
+
+  h1 {
+    @apply text-4xl leading-none md:text-5xl 2xl:text-6xl;
   }
 
   h1,
   h2,
   h3 {
-    font-weight: 400;
+    font-weight: 800 !important;
     line-height: 0.8em;
     letter-spacing: 0.01em;
-    mask-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.8) 0%, black 100%);
   }
 
   p {
@@ -179,193 +182,4 @@ body {
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-.diagonal:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  background-size: 3px 3px;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.1) 0,
-    rgba(255, 255, 255, 0.1) 0.5px,
-    transparent 0,
-    transparent 50%
-  );
-  pointer-events: none;
-}
-
-.diagonal-dark:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  background-size: 6px 6px;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.2) 0,
-    rgba(255, 255, 255, 0.2) 1px,
-    transparent 0,
-    transparent 50%
-  );
-  pointer-events: none;
-  mask-image: linear-gradient(to bottom, black 8px, transparent 8px),
-    linear-gradient(to top, black 8px, transparent 8px),
-    linear-gradient(to left, black 8px, transparent 8px),
-    linear-gradient(to right, black 8px, transparent 8px);
-  animation: animateBackground 20s linear infinite;
-}
-
-.diagonal-dark-full:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  background-size: 6px 6px;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(255, 255, 255, 0.2) 0,
-    rgba(255, 255, 255, 0.2) 1px,
-    transparent 0,
-    transparent 50%
-  );
-  pointer-events: none;
-  animation: animateBackground 20s linear infinite;
-}
-
-@keyframes animateBackground {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 100% 0;
-  }
-}
-
-.json-view-string {
-  color: green;
-}
-.json-view-number {
-  color: brown;
-}
-.json-view-boolean {
-  color: blue;
-}
-.json-view-null {
-  color: gray;
-}
-.json-view-key {
-  @apply text-red-400;
-}
-
-.alert-move-left {
-  animation: move-left 5s linear infinite;
-  animation-fill-mode: forwards;
-}
-
-@keyframes move-left {
-  0% {
-    transform: translateX(-52.5%);
-  }
-  100% {
-    transform: translateX(-175%);
-  }
-}
-
-.pulse {
-  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.ping {
-  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  animation-delay: 2s;
-}
-
-@keyframes ping {
-  75%,
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-.shimmer:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-
-  background-image: linear-gradient(
-    45deg,
-    transparent,
-    transparent,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent,
-    transparent,
-    transparent,
-    transparent
-  );
-  background-size: 300%;
-  background-position: 150%;
-  background-repeat: no-repeat;
-  animation: shimmy 4s infinite ease-in-out;
-  animation-delay: 2s;
-}
-
-@keyframes shimmy {
-  0% {
-    background-position: 150%;
-  }
-  100% {
-    background-position: -150%;
-  }
-}
-
-.bounce {
-  animation: bounce 2s infinite ease-in-out;
-
-  @keyframes bounce {
-    0%,
-    100% {
-      transform: translateY(0);
-      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-    }
-    50% {
-      transform: translateY(-10%);
-      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-    }
-  }
-}
-
-.audio-background {
-  background-image: radial-gradient(circle at 0% 100%, rgba(0, 0, 0, 0.9) 0%, transparent 50%);
-}
-
-.noise {
-  background-image: url("/textures/noise.png");
-  opacity: 0.2;
 }
