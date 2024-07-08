@@ -136,6 +136,18 @@ module.exports = {
           },
           "canvas-fade-in": {
             animation: "fade-in 5s ease-out 0.5s forwards"
+          },
+          h1: {
+            fontSize: "2.25rem"
+          },
+          h2: {
+            fontSize: "1.75rem"
+          },
+          h3: {
+            fontSize: "1.5rem"
+          },
+          h4: {
+            fontSize: "1.25rem"
           }
         });
     }),

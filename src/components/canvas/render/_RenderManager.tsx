@@ -185,6 +185,7 @@ class RenderManager {
     }
 
     // Bloom composite material
+    console.log("bloom2shit", this.renderTargetsVertical);
     this.bloomCompositeMaterial = new BloomCompositeMaterial();
     this.bloomCompositeMaterial.uniforms.tBlur1.value = this.renderTargetsVertical[0].texture;
     this.bloomCompositeMaterial.uniforms.tBlur2.value = this.renderTargetsVertical[1].texture;

@@ -1,5 +1,5 @@
 export const seo = {
-  title: "Framework x Totem",
+  title: "A$AP Rocky x Totem",
   description: "A new format of music",
   icons: [
     {

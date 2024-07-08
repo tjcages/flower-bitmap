@@ -11,28 +11,7 @@ class ScenePanelController {
   static init(view: SceneView): void {
     this.view = view;
 
-    this.initPanel();
-
     this.addListeners();
-  }
-
-  static initPanel(): void {
-    const { darkPlanet, floatingCrystal, abstractCube } = this.view;
-
-    const objects = [abstractCube, floatingCrystal, darkPlanet]; // temporary to hide discoshark hover state
-    objects.forEach((object, index) => {
-      if (object) {
-        object.point = new Point3D(object.mesh, {
-          type: "",
-          noTracker: true,
-          index: index
-        });
-        object.add(object.point);
-      }
-    });
-
-    // Shrink tracker meshes a little bit
-    // if (abstractCube) abstractCube.point.mesh.scale.multiplyScalar(0.9);
   }
 
   static addListeners(): void {
