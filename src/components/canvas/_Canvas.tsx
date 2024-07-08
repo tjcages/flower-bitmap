@@ -112,8 +112,10 @@ class Canvas {
 
 const _ = () => {
   useEffect(() => {
+    console.log("Render canvas");
     new Canvas();
   }, []);
+
   return (
     <canvas
       id="canvas"
