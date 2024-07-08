@@ -45,11 +45,9 @@ class _ extends Group {
     const { anisotropy, loadTexture, loadGLTF } = WorldController;
 
     const gltf = await loadGLTF("/objects/jacket.glb");
-    console.log(gltf);
     const model = gltf.scene.children[0] as Mesh;
     const mesh = model as Mesh;
 
-    console.log(mesh);
     // create a new uv
     mesh.geometry.attributes.uv = mesh.geometry.attributes.position;
     mesh.geometry.attributes.uv1 = mesh.geometry.attributes.uv;

@@ -44,7 +44,7 @@ const _ = () => {
         alt="totem"
         width={100}
         height={100}
-        className="absolute left-8 top-8 z-10"
+        className="absolute left-8 top-8 z-10 w-auto h-8"
       />
     </div>
   );

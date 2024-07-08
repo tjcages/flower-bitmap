@@ -116,7 +116,6 @@ class CameraController {
         const { data } = Router.get(location.pathname);
 
         this.ui.details.title.setTitle(data.title.replace(/[\s.]+/g, " "));
-        console.log(this.ui.details.content.element);
         this.ui.details.content.element.textContent = data.content;
 
         const next = Data.getNext(data);
