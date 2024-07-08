@@ -58,8 +58,6 @@ class _ extends Group {
     const gltf = await loadGLTF("/objects/shark.glb");
     const model = gltf.scene.children[0] as Mesh;
 
-    console.log(model);
-
     // Crystal mesh
     const mesh = model.children[0] as Mesh;
     // make material metallic
