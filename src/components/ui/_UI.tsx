@@ -28,7 +28,7 @@ const _ = () => {
   });
 
   return (
-    <div className="fixed w-full h-full flex items-end justify-start p-4 md:p-[2.5vh] text-white uppercase pointer-events-none">
+    <div className="fixed w-full h-full flex items-end justify-start p-4 pb-3 md:p-[2.5vh] md:pb-[1vh] text-white uppercase pointer-events-none">
       <div ref={ref} className="flex flex-col items-start justify-start gap-2">
         <h3 className="fs-3">A$AP ROCKY</h3>
         <h1 className="fs-1">
@@ -44,7 +44,7 @@ const _ = () => {
         alt="totem"
         width={100}
         height={100}
-        className="absolute left-8 top-8 z-10 w-auto h-8"
+        className="absolute left-4 top-4 z-10 w-auto h-8"
       />
     </div>
   );

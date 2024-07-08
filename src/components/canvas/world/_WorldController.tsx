@@ -29,6 +29,7 @@ class WorldController {
   static scene: Scene & { environmentIntensity?: number };
   static camera: PerspectiveCamera;
   static controls: typeof OrbitControls;
+  static light: DirectionalLight;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static screenTriangle: any; // Define the correct type if available
   private static resolution: { value: Vector2 };
@@ -94,12 +95,12 @@ class WorldController {
   static initLights() {
     this.scene.add(new HemisphereLight(0x606060, 0x404040, 3));
 
-    const light = new DirectionalLight(0xffffff, 8);
-    light.position.set(5, 5, 5);
-    light.castShadow = true;
-    light.shadow.mapSize.width = 2048;
-    light.shadow.mapSize.height = 2048;
-    this.scene.add(light);
+    this.light = new DirectionalLight(0xffffff, 6);
+    this.light.position.set(5, 5, 5);
+    this.light.castShadow = true;
+    this.light.shadow.mapSize.width = 2048;
+    this.light.shadow.mapSize.height = 2048;
+    this.scene.add(this.light);
   }
 
   static initLoaders() {
@@ -162,6 +163,9 @@ class WorldController {
     this.time.value = time;
     this.frame.value = frame;
     this.controls.update();
+
+    // light position same as camera lerped
+    this.light.position.lerp(this.camera.position, 0.01);
   };
 
   // Global handlers

@@ -9,6 +9,7 @@ import {
   Mesh,
   MeshStandardMaterial,
   PerspectiveCamera,
+  Texture,
   Vector3
 } from "three";
 
@@ -36,6 +37,7 @@ const name = "Rocky Rugahand";
 class _ extends Group {
   private camera?: PerspectiveCamera;
   mesh?: Mesh;
+  private texture?: Texture;
   private group?: Group;
   point?: typeof Point3D;
 
@@ -63,10 +65,10 @@ class _ extends Group {
     const gltf = await loadGLTF("/objects/rugahand.glb");
     const model = gltf.scene.children[0] as Mesh;
 
-    const texture = await loadTexture(
+    this.texture = await loadTexture(
       "https://raw.githack.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/studio_small_03_1k.hdr"
     );
-    texture.mapping = EquirectangularReflectionMapping;
+    if (this.texture) this.texture.mapping = EquirectangularReflectionMapping;
 
     const mesh = model as Mesh;
 
@@ -96,8 +98,8 @@ class _ extends Group {
     // Layers
     mesh.layers.enable(layers.velocity);
     // environment map
-    if (mesh.isMesh && mesh.material instanceof MeshStandardMaterial) {
-      (mesh.material as MeshStandardMaterial).envMap = texture;
+    if (mesh.isMesh && mesh.material instanceof MeshStandardMaterial && this.texture) {
+      (mesh.material as MeshStandardMaterial).envMap = this.texture;
     }
 
     const group = new Group();
@@ -128,7 +130,13 @@ class _ extends Group {
   public update(): void {
     if (!params.animate || !this.group) return;
 
-    this.group.rotation.y -= 0.0025 * params.speed;
+    this.rotation.y -= 0.0025 * params.speed;
+
+    const { camera } = WorldController;
+    // have this.texture follow the camera
+    if (camera && this.texture) {
+      this.texture.rotation = camera.position.z;
+    }
   }
 }
 
