@@ -15,6 +15,12 @@ export const seo = {
     images: [
       {
         url: "https://asap-rocky.totem.info/preview.gif",
+        width: 432,
+        height: 360,
+        alt: "Totem Preview"
+      },
+      {
+        url: "https://asap-rocky.totem.info/preview.png",
         width: 1600,
         height: 898,
         alt: "Totem Preview"
