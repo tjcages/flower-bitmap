@@ -13,27 +13,37 @@ class Canvas {
   private static ui: typeof UI;
 
   constructor() {
+    console.log("canvas init");
     Canvas.init();
   }
 
   static async init() {
+    console.log("thread init");
     this.initThread();
+    console.log("stage init");
     this.initStage();
+    console.log("world init");
     this.initWorld();
+    console.log("views init");
     this.initViews();
+    console.log("controllers init");
     this.initControllers();
 
+    console.log("add listeners");
     this.addListeners();
     this.onResize();
 
+    console.log("await promise all");
     await Promise.all([
       SceneController.ready(),
       WorldController.textureLoader.ready(),
       WorldController.environmentLoader.ready()
     ]);
 
+    console.log("init panel");
     this.initPanel();
 
+    console.log("animate in");
     this.animateIn();
   }
 
