@@ -69,6 +69,7 @@ class _ extends Group {
     texture.mapping = EquirectangularReflectionMapping;
 
     const mesh = model as Mesh;
+    console.log("mesh", mesh);
 
     // make material color white
     if (mesh.material instanceof Array) {
