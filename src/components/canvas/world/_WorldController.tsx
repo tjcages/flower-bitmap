@@ -17,6 +17,7 @@ import {
   PerspectiveCamera,
   Scene,
   Vector2,
+  Vector3,
   WebGLRenderer
 } from "three";
 import { DRACOLoader } from "three-stdlib";
@@ -165,7 +166,10 @@ class WorldController {
     this.controls.update();
 
     // light position same as camera lerped
-    this.light.position.lerp(this.camera.position, 0.01);
+    this.light.position.lerp(
+      this.camera.position.clone().sub(new Vector3(0, Math.PI / 2, 0)),
+      0.01
+    );
   };
 
   // Global handlers

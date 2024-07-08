@@ -49,7 +49,7 @@ class Canvas {
     this.view = new SceneView();
     WorldController.scene.add(this.view);
 
-    this.ui = new UI({ fps: true });
+    this.ui = new UI({ fps: false });
     this.ui.animateIn();
 
     Stage.add(this.ui);
