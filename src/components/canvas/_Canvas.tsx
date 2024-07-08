@@ -1,6 +1,6 @@
 "use client";
 
-import { ImageBitmapLoaderThread, Stage, Thread, UI, ticker } from "@alienkitty/alien.js/all/three";
+import { Stage, UI, ticker } from "@alienkitty/alien.js/all/three";
 import { useEffect } from "react";
 
 import { PanelController } from "./panel";
@@ -18,8 +18,6 @@ class Canvas {
   }
 
   static async init() {
-    console.log("thread init");
-    this.initThread();
     console.log("stage init");
     this.initStage();
     console.log("world init");
@@ -45,12 +43,6 @@ class Canvas {
 
     console.log("animate in");
     this.animateIn();
-  }
-
-  static initThread() {
-    ImageBitmapLoaderThread.init();
-
-    Thread.shared();
   }
 
   static initStage() {
