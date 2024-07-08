@@ -9,12 +9,12 @@ export const seo = {
   ],
   openGraph: {
     type: "website",
-    url: "https://totem.info",
+    url: "https://asap-rocky.totem.info",
     title: "Totem",
     description: "A new format of music",
     images: [
       {
-        url: "https://frameworkxtotem.vercel.app/preview.png",
+        url: "https://asap-rocky.totem.info/preview.gif",
         width: 1600,
         height: 898,
         alt: "Totem Preview"
