@@ -89,9 +89,9 @@ class _ extends Group {
 
     // Textures
     const [map, normalMap, ormMap] = await Promise.all([
-      loadTexture("./textures/pbr/pitted_metal_basecolor.jpg"),
-      loadTexture("./textures/pbr/pitted_metal_normal.jpg"),
-      loadTexture("./textures/pbr/pitted_metal_orm.jpg")
+      loadTexture("/textures/pbr/pitted_metal_basecolor.jpg"),
+      loadTexture("/textures/pbr/pitted_metal_normal.jpg"),
+      loadTexture("/textures/pbr/pitted_metal_orm.jpg")
     ]);
 
     map.anisotropy = anisotropy;
@@ -128,7 +128,7 @@ class _ extends Group {
 
     // Decals
     this.renderDecal(
-      "./example.mov", // Change this to your video file path
+      "/example.mov", // Change this to your video file path
       new Vector3(0, 0.2, 0),
       new Vector3(1.3, 1.3, 1),
       new Euler(MathUtils.degToRad(-90), 0, 0),

@@ -84,10 +84,10 @@ class _ extends Group {
 
     // Textures
     const [map, normalMap, ormMap, envMap] = await Promise.all([
-      loadTexture("./textures/pbr/pitted_metal_basecolor.jpg"),
-      loadTexture("./textures/pbr/pitted_metal_normal.jpg"),
-      loadTexture("./textures/pbr/pitted_metal_orm.jpg"),
-      loadEnvironmentTexture("./textures/env/jewelry_black_contrast.jpg")
+      loadTexture("/textures/pbr/pitted_metal_basecolor.jpg"),
+      loadTexture("/textures/pbr/pitted_metal_normal.jpg"),
+      loadTexture("/textures/pbr/pitted_metal_orm.jpg"),
+      loadEnvironmentTexture("/textures/env/jewelry_black_contrast.jpg")
     ]);
 
     map.anisotropy = anisotropy;

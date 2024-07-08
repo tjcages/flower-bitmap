@@ -204,10 +204,10 @@ class RenderManager {
     // Debug materials
     this.blackoutMaterial = new MeshBasicMaterial({ color: 0x000000 });
     this.matcap1Material = new MeshMatcapMaterial({
-      matcap: getTexture("./textures/matcaps/040full.jpg")
+      matcap: getTexture("/textures/matcaps/040full.jpg")
     });
     this.matcap2Material = new MeshMatcapMaterial({
-      matcap: getTexture("./textures/matcaps/defaultwax.jpg")
+      matcap: getTexture("/textures/matcaps/defaultwax.jpg")
     });
     this.normalMaterial = new NormalMaterial();
     this.depthMaterial = new DepthMaterial();

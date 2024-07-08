@@ -66,9 +66,9 @@ class _ extends Group {
 
     // Textures
     const [map, normalMap, ormMap] = await Promise.all([
-      loadTexture("./textures/pbr/pitted_metal_basecolor.jpg"),
-      loadTexture("./textures/pbr/pitted_metal_normal.jpg"),
-      loadTexture("./textures/pbr/pitted_metal_orm.jpg")
+      loadTexture("/textures/pbr/pitted_metal_basecolor.jpg"),
+      loadTexture("/textures/pbr/pitted_metal_normal.jpg"),
+      loadTexture("/textures/pbr/pitted_metal_orm.jpg")
     ]);
 
     map.anisotropy = anisotropy;
@@ -107,35 +107,35 @@ class _ extends Group {
 
     // Decals
     this.renderDecal(
-      "./framework-liquid.svg",
+      "/framework-liquid.svg",
       new Vector3(0.7, 0, 0),
       new Vector3(0.5, 0.5, 0.5),
       new Euler(0, MathUtils.degToRad(-90), MathUtils.degToRad(-90)),
       true
     );
     this.renderDecal(
-      "./discoshark.svg",
+      "/discoshark.svg",
       new Vector3(0, 0.7, 0),
       new Vector3(0.5, 1, 0.5),
       new Euler(MathUtils.degToRad(-90), 0, 0),
       false
     );
     this.renderDecal(
-      "./totem.svg",
+      "/totem.svg",
       new Vector3(0, 0, -0.7),
       new Vector3(0.5, 0.25, 0.5),
       new Euler(0, Math.PI, 0),
       false
     );
     this.renderDecal(
-      "./disclaimer.svg",
+      "/disclaimer.svg",
       new Vector3(0, 0, 0.7),
       new Vector3(0.7, 0.6, 0.7),
       new Euler(0, 0, 0),
       false
     );
     this.renderDecal(
-      "./bottom.svg",
+      "/bottom.svg",
       new Vector3(0, -1, 0),
       new Vector3(1, 1.35, 1),
       new Euler(MathUtils.degToRad(90), 0, 0),

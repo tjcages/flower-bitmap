@@ -45,7 +45,7 @@ class _ extends RawShaderMaterial {
   constructor(direction = new Vector2(0.5, 0.5)) {
     const { getTexture } = WorldController;
 
-    const texture = getTexture("./textures/blue_noise.png");
+    const texture = getTexture("/textures/blue_noise.png");
     texture.wrapS = RepeatWrapping;
     texture.wrapT = RepeatWrapping;
     texture.magFilter = NearestFilter;

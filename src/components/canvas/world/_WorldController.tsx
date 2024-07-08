@@ -117,7 +117,7 @@ class WorldController {
 
   static async initEnvironment() {
     this.scene.environment = await this.loadEnvironmentTexture(
-      "./textures/env/jewelry_black_contrast.jpg"
+      "/textures/env/jewelry_black_contrast.jpg"
     );
     this.scene.environmentIntensity = 0.5;
   }

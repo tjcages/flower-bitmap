@@ -32,7 +32,7 @@ class _ extends Group {
 
     const { loadTexture } = WorldController;
 
-    const map = await loadTexture("./textures/waterdudv.jpg");
+    const map = await loadTexture("/textures/waterdudv.jpg");
     map.wrapS = RepeatWrapping;
     map.wrapT = RepeatWrapping;
     map.repeat.set(5, 3);
