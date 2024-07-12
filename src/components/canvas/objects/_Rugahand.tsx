@@ -76,16 +76,17 @@ class _ extends Group {
     if (mesh.material instanceof Array) {
       mesh.material.forEach(material => {
         if (material instanceof MeshStandardMaterial) {
-          material.color = new Color(0xe9e8e4);
-          material.metalness = 0.75;
-          material.roughness = 1;
+          // silver
+          material.color = new Color(0xe0e1dd);
+          material.metalness = 1;
+          material.roughness = 0.1;
         }
       });
     } else {
       if (mesh.material instanceof MeshStandardMaterial) {
-        mesh.material.color = new Color(0xe9e8e4);
-        mesh.material.metalness = 0.75;
-        mesh.material.roughness = 1;
+        mesh.material.color = new Color(0xa3a3a3);
+        mesh.material.metalness = 1;
+        mesh.material.roughness = 0.4;
       }
     }
 
