@@ -64,15 +64,15 @@
     width: 100dvw;
   }
 
-  button {
-    @apply flex items-center justify-center;
-    @apply px-14 py-1 text-[16px] uppercase md:text-[18px];
-    @apply bg-white/80 text-black backdrop-blur-lg;
-    @apply pointer-events-auto transition-all duration-300 ease-in-out;
-    @apply outline outline-1 outline-offset-0 outline-white/20 md:outline-2 md:outline-offset-0;
-    @apply hover:bg-white/100 hover:outline-offset-[2px] hover:outline-white hover:md:outline-offset-[2px];
-    @apply disabled:cursor-not-allowed disabled:opacity-50;
-  }
+  // button {
+  //   @apply flex items-center justify-center;
+  //   @apply px-14 py-1 text-[16px] uppercase md:text-[18px];
+  //   @apply bg-white/80 text-black backdrop-blur-lg;
+  //   @apply pointer-events-auto transition-all duration-300 ease-in-out;
+  //   @apply outline outline-1 outline-offset-0 outline-white/20 md:outline-2 md:outline-offset-0;
+  //   @apply hover:bg-white/100 hover:outline-offset-[2px] hover:outline-white hover:md:outline-offset-[2px];
+  //   @apply disabled:cursor-not-allowed disabled:opacity-50;
+  // }
 
   input:focus,
   textarea:focus {
@@ -186,4 +186,79 @@ body {
 
 .noise {
   @apply after:pointer-events-none after:absolute after:inset-0 after:bg-[url('/textures/noise.png')] after:opacity-100 after:mix-blend-hard-light;
+}
+
+button {
+  user-select: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  height: 44px;
+  min-width: 136px;
+  border-radius: 9999px;
+  padding: 0 17px 0 12px;
+
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: white;
+
+  transition: 200ms ease;
+  transition-property: box-shadow, background, transform;
+
+  &[data-variant="link"] {
+  }
+
+  &[data-variant="glass"] {
+    position: relative;
+    background: #111111;
+    backdrop-filter: blur(1px);
+    box-shadow:
+      0 78px 51px 0 rgba(0, 0, 0, 0.1),
+      0 50px 30px 0 rgba(0, 0, 0, 0.07),
+      0 30px 16px 0 rgba(0, 0, 0, 0.06),
+      0 16px 8px rgba(0, 0, 0, 0.04),
+      0 6px 4px rgba(0, 0, 0, 0.04),
+      0 2px 2px rgba(0, 0, 0, 0.02);
+
+    --gradientBorder-size: 1px;
+    --gradientBorder-gradient: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.94),
+      #797979 26%,
+      #a4a4a4 63%,
+      #fff 100%
+    );
+
+    &::before {
+      content: "";
+      pointer-events: none;
+      user-select: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-radius: inherit;
+      padding: var(--gradientBorder-size, 1px);
+      background: var(--gradientBorder-gradient);
+
+      mask:
+        linear-gradient(black, black) content-box,
+        linear-gradient(black, black);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: scale(0.95);
+  }
 }

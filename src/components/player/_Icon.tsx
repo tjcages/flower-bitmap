@@ -1,31 +1,59 @@
-import { Controls, List, Next, Pause, Phone, Play, Previous, Profile, Send } from "@/assets/icons";
+import {
+  Controls,
+  Fingerprint,
+  List,
+  Lock,
+  Next,
+  Pause,
+  Phone,
+  Play,
+  Previous,
+  Profile,
+  Send
+} from "@/assets/icons";
 
 interface Props {
-  icon: "controls" | "next" | "pause" | "play" | "previous" | "list" | "profile" | "phone" | "send";
+  id?: string;
+  icon:
+    | "controls"
+    | "next"
+    | "pause"
+    | "play"
+    | "previous"
+    | "list"
+    | "profile"
+    | "phone"
+    | "send"
+    | "lock"
+    | "fingerprint";
   className?: string;
 }
 
-const _ = ({ icon, className }: Props) => {
+const _ = ({ id, icon, className }: Props) => {
   const render = () => {
     switch (icon) {
       case "controls":
-        return <Controls className={className} />;
+        return <Controls id={id} className={className} />;
       case "next":
-        return <Next className={className} />;
+        return <Next id={id} className={className} />;
       case "pause":
-        return <Pause className={className} />;
+        return <Pause id={id} className={className} />;
       case "play":
-        return <Play className={className} />;
+        return <Play id={id} className={className} />;
       case "previous":
-        return <Previous className={className} />;
+        return <Previous id={id} className={className} />;
       case "list":
-        return <List className={className} />;
+        return <List id={id} className={className} />;
       case "profile":
-        return <Profile className={className} />;
+        return <Profile id={id} className={className} />;
       case "phone":
-        return <Phone className={className} />;
+        return <Phone id={id} className={className} />;
       case "send":
-        return <Send className={className} />;
+        return <Send id={id} className={className} />;
+      case "lock":
+        return <Lock id={id} className={className} />;
+      case "fingerprint":
+        return <Fingerprint id={id} className={className} />;
       default:
         return null;
     }

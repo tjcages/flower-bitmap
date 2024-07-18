@@ -1,12 +1,14 @@
 import { cn } from "@/utils";
 
 interface Props {
+  id?: string;
   className?: string;
 }
 
-const _ = ({ className }: Props) => {
+const _ = ({ id, className }: Props) => {
   return (
     <svg
+      id={id}
       className={cn(className)}
       width="52"
       height="58"

@@ -1,10 +1,9 @@
 "use client";
 
-import { cn } from "@/utils";
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { Flip } from "gsap/Flip";
-import { AsYouType, isValidPhoneNumber } from "libphonenumber-js";
+import { AsYouType } from "libphonenumber-js";
 import { useEffect, useRef, useState } from "react";
 
 import Icon from "@/components/player/_Icon";
@@ -56,7 +55,7 @@ const _ = ({ children }: Props) => {
     });
 
     const contentOpen = "top-0 bottom-auto h-[100px] px-4 py-2";
-    const contentClosed = "top-auto bottom-12 p-6";
+    const contentClosed = "top-auto bottom-[68px] p-6";
 
     if (open) {
       content.classList.remove(...contentClosed.split(" "));
@@ -96,16 +95,23 @@ const _ = ({ children }: Props) => {
       props: "padding, borderRadius"
     });
 
-    const contentOpen = "left-0 right-0 top-[116px] bottom-auto h-auto p-4";
-    const contentClosed = "bottom-0 w-[160px] h-8 px-3 py-1";
+    const contentOpen = "left-0 right-0 top-[116px] bottom-0 h-auto p-4";
+    const contentClosed = "bottom-0 h-14 p-2 pl-4";
 
     if (open) {
       content.classList.remove(...contentClosed.split(" "));
       content.classList.add(...contentOpen.split(" "));
 
-      gsap.to(["#account-header"], {
+      gsap.to(["#account-lock"], {
         duration: 0.8,
         opacity: 1,
+        ease: "expo.inOut",
+        overwrite: "auto"
+      });
+      gsap.to(["#account-unlock"], {
+        duration: 0.8,
+        opacity: 0,
+        filter: "blur(2px)",
         ease: "expo.inOut",
         overwrite: "auto",
         onComplete: () => {
@@ -120,9 +126,16 @@ const _ = ({ children }: Props) => {
       const input = document.getElementById("account-input");
       if (input) input.blur();
 
-      gsap.to(["#account-header"], {
+      gsap.to(["#account-lock"], {
         duration: 0.8,
-        opacity: 0.8,
+        opacity: 0.3,
+        ease: "expo.inOut",
+        overwrite: "auto"
+      });
+      gsap.to(["#account-unlock"], {
+        duration: 0.8,
+        opacity: 1,
+        filter: "blur(0px)",
         ease: "expo.inOut",
         overwrite: "auto"
       });
@@ -158,21 +171,21 @@ const _ = ({ children }: Props) => {
   return (
     <div
       id="main"
-      className="fixed top-0 left-0 right-0 bottom-0 text-white bg-[#04080c] uppercase pointer-events-none overflow-scroll"
+      className="fixed top-0 left-0 right-0 bottom-0 text-white bg-[#111111] uppercase pointer-events-none"
     >
       <div
         id="children"
-        className="fixed inset-0 noise pointer-events-auto cursor-pointer"
+        className="fixed top-0 left-0 right-0 bottom-0 noise overflow-hidden pointer-events-auto cursor-pointer"
         onClick={() => open && setOpen(false)}
       >
         {children}
       </div>
-      <div className="fixed left-4 right-4 bottom-4 top-4 flex flex-col items-center justify-center gap-4 mix-blend-hard-light opacity-90">
+      <div className="fixed left-0 right-0 bottom-0 top-4 flex flex-col items-center justify-center gap-4">
         {/* Player */}
         <div
           id="player"
           ref={playerRef}
-          className="absolute top-auto bottom-12 w-full p-6 bg-black/90 rounded-2xl outline outline-1 outline-white/20 shadow-2xl shadow-black/80 noise overflow-hidden pointer-events-auto cursor-pointer"
+          className="absolute top-auto bottom-12 z-0 left-4 right-4 p-6 bg-black/90 rounded-2xl outline outline-1 outline-white/20 shadow-2xl shadow-black/80 noise mix-blend-hard-light overflow-hidden pointer-events-auto cursor-pointer"
           onClick={() => open && setOpen(false)}
         >
           <div id="player-header" className="flex items-center justify-between">
@@ -207,12 +220,21 @@ const _ = ({ children }: Props) => {
         {/* Account trigger */}
         <div
           id="account"
-          className="absolute bottom-0 flex flex-col justify-start items-start w-[160px] gap-2 px-3 py-1 text-black bg-white/90 rounded-2xl h-8 outline outline-1 outline-white/40 shadow-xl shadow-white/40 overflow-hidden pointer-events-auto cursor-pointer"
+          className="absolute bottom-0 z-10 flex flex-col justify-start items-start gap-2 p-2 pl-4 h-12 rounded-t-2xl text-black bg-[#dfdfdf] outline outline-1 outline-white/40 shadow-xl shadow-white/40 pointer-events-auto cursor-pointer"
           onClick={() => !open && setOpen(true)}
         >
-          <div id="account-header" className="flex justify-center items-center gap-2 opacity-80">
-            <Icon icon="profile" className="max-w-[16px] max-h-[16px]" />
-            <p className="font-medium">Activate Totem</p>
+          <div
+            id="account-header"
+            className="relative flex justify-between items-center w-full gap-2"
+          >
+            <p className="text-xl font-bold tracking-tight mr-auto">Don&apos;t Be Dumb</p>
+            <div
+              id="account-unlock"
+              className="flex items-center justify-center gap-1 pl-3 pr-4 py-2 rounded-lg text-black outline-white/20 pointer-events-auto outline outline-1 transition-colors duration-200 ease-in-out"
+            >
+              <Icon icon="fingerprint" className="max-w-[16px] max-h-[16px]" />
+              <p className="tracking-tight whitespace-nowrap">Unlock Album</p>
+            </div>
           </div>
           {/* phone number */}
           <div className="flex items-center gap-2 w-full h-12 min-h-[48px] my-2 pl-4 bg-black/10 rounded-full outline outline-1 outline-white/40 overflow-hidden pointer-events-auto">
@@ -236,19 +258,9 @@ const _ = ({ children }: Props) => {
             Verify your phone number to associate your totem & activate your account.
           </p>
           <hr className="bg-black/10" />
-          {/* send button */}
-          <div className="relative z-10 h-full py-1 ml-auto">
-            <div
-              className={cn(
-                "flex items-center justify-center px-4 py-2 rounded-full",
-                !isValidPhoneNumber(phone, "US")
-                  ? "text-black bg-white pointer-events-none"
-                  : "text-white bg-black pointer-events-auto"
-              )}
-            >
-              <p className="whitespace-nowrap">Send Code</p>
-            </div>
-          </div>
+          <button className="ml-auto my-2" data-variant="glass">
+            Send Code
+          </button>
         </div>
       </div>
     </div>
