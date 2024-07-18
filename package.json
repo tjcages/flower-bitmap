@@ -21,6 +21,7 @@
     "glsl-noise": "^0.0.0",
     "gsap": "^3.12.5",
     "howler": "^2.2.4",
+    "libphonenumber-js": "^1.11.4",
     "next": "14.1.4",
     "oimophysics": "^1.2.2",
     "react": "^18",

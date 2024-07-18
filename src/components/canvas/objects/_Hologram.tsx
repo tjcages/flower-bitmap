@@ -183,6 +183,7 @@ class _ extends Group {
     this.uniforms = uniforms;
 
     this.add(mesh, glowMesh, wireframe);
+    this.scale.set(0.25, 0.25, 0.25);
   }
 
   public resize(width: number, height: number): void {}

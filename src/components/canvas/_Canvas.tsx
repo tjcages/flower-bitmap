@@ -1,6 +1,6 @@
 "use client";
 
-import { Stage, UI, ticker } from "@alienkitty/alien.js/all/three";
+import { UI, ticker } from "@alienkitty/alien.js/all/three";
 import { useEffect } from "react";
 
 import { PanelController } from "./panel";
@@ -17,7 +17,6 @@ class Canvas {
   }
 
   static async init() {
-    this.initStage();
     this.initWorld();
     this.initViews();
     this.initControllers();
@@ -35,14 +34,8 @@ class Canvas {
     this.animateIn();
   }
 
-  static initStage() {
-    Stage.init();
-    Stage.css({ opacity: 0 });
-  }
-
   static initWorld() {
     WorldController.init();
-    Stage.add(WorldController.element);
   }
 
   static initViews() {
@@ -51,8 +44,6 @@ class Canvas {
 
     this.ui = new UI({ fps: false });
     this.ui.animateIn();
-
-    Stage.add(this.ui);
   }
 
   static initControllers() {
@@ -76,8 +67,9 @@ class Canvas {
   // Event handlers
 
   static onResize = () => {
-    const width = document.documentElement.clientWidth;
-    const height = document.documentElement.clientHeight;
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
     const dpr = window.devicePixelRatio;
 
     WorldController.resize(width, height, dpr);
@@ -95,10 +87,6 @@ class Canvas {
   static animateIn = () => {
     SceneController.animateIn();
     this.ui.animateIn();
-
-    Stage.tween({ opacity: 1 }, 1000, "linear", () => {
-      Stage.css({ opacity: "" });
-    });
   };
 }
 
@@ -107,12 +95,7 @@ const _ = () => {
     new Canvas();
   }, []);
 
-  return (
-    <canvas
-      id="canvas"
-      className="fixed top-0 right-0 left-0 bottom-0 w-full h-full text-white pointer-events-auto"
-    />
-  );
+  return <canvas id="canvas" className="w-full h-full text-white pointer-events-auto" />;
 };
 
 export default _;

@@ -1,11 +1,31 @@
-import Canvas from "@/components/canvas";
-import UI from "@/components/ui";
+import Player from "@/components/player";
 
 const _ = () => {
   return (
-    <main className="fixed z-10 left-0 right-0 bottom-0 top-0 w-full h-full overflow-hidden pointer-events-none">
-      <Canvas />
-      <UI />
+    <main className="fixed z-10 w-full h-full overflow-hidden">
+      <Player>
+        {/* <Canvas /> */}
+        <div className="grid grid-rows-[1fr_200px] w-full h-full">
+          <video
+            autoPlay
+            playsInline
+            loop
+            muted
+            className="w-full h-full object-cover gradient-mask-b-10"
+          >
+            <source src="/example.mov" type="video/mp4" />
+          </video>
+          <video
+            autoPlay
+            playsInline
+            loop
+            muted
+            className="w-full h-full object-cover -scale-y-100 blur-lg gradient-mask-b-10"
+          >
+            <source src="/example.mov" type="video/mp4" />
+          </video>
+        </div>
+      </Player>
     </main>
   );
 };

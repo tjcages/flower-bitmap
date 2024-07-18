@@ -2,7 +2,7 @@
 
 import { Group } from "three";
 
-import { Cube, Floor, Player, Rugahand, Shark, Slant } from "@/components/canvas/objects";
+import { Cube, Floor, Player, Shark, Slant } from "@/components/canvas/objects";
 
 class SceneView extends Group {
   floor?: Floor;
@@ -10,9 +10,8 @@ class SceneView extends Group {
   floatingCrystal?: Shark;
   abstractCube?: Cube;
   slant?: Slant;
-  rugahand?: Rugahand;
 
-  objects: (Player | Slant | Shark | Floor | Rugahand)[] = [];
+  objects: (Player | Slant | Shark | Floor)[] = [];
 
   constructor() {
     super();
@@ -26,8 +25,10 @@ class SceneView extends Group {
     const floor = new Floor();
     this.objects.push(floor);
 
-    this.rugahand = new Rugahand();
-    this.objects.push(this.rugahand);
+    const player = new Player({
+      position: { x: 0, y: 0.75, z: 2 }
+    });
+    this.objects.push(player);
 
     this.objects.reverse().map(obj => this.add(obj));
   }
