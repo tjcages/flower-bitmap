@@ -95,7 +95,7 @@ const _ = ({ children }: Props) => {
       props: "padding, borderRadius"
     });
 
-    const contentOpen = "left-0 right-0 top-[116px] bottom-auto h-auto p-6";
+    const contentOpen = "left-0 right-0 top-[116px] bottom-auto h-auto p-4";
     const contentClosed = "bottom-0 w-[180px] h-8 px-3 py-1";
 
     if (open) {
@@ -214,11 +214,11 @@ const _ = ({ children }: Props) => {
             <p className="font-semibold">Activate Totem</p>
           </div>
           {/* phone number */}
-          <div className="flex items-center gap-2 w-full h-12 min-h-[48px] my-2 pl-4 bg-white/10 rounded-full outline outline-1 outline-white/20 overflow-hidden">
+          <div className="flex items-center gap-2 w-full h-12 min-h-[48px] my-2 pl-4 bg-white/10 rounded-full outline outline-1 outline-white/40 overflow-hidden pointer-events-auto">
             <Icon icon="phone" className="max-w-[16px] max-h-[16px] text-white/80" />
             <input
               id="account-input"
-              className="w-full h-full text-lg bg-transparent placeholder:text-white/80 pointer-events-auto cursor-text"
+              className="relative w-full h-full text-lg bg-transparent placeholder:text-white/80 pointer-events-auto cursor-text"
               placeholder="Enter phone number"
               value={phone}
               onChange={e => setPhone(new AsYouType("US").input(e.target.value))}
