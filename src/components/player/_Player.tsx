@@ -3,7 +3,7 @@
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { Flip } from "gsap/Flip";
-import { AsYouType } from "libphonenumber-js";
+import { AsYouType, isValidPhoneNumber } from "libphonenumber-js";
 import { useEffect, useRef, useState } from "react";
 
 import Icon from "@/components/player/_Icon";
@@ -92,22 +92,16 @@ const _ = ({ children }: Props) => {
     const content = document.getElementById("account");
     if (!content) return;
     const state = Flip.getState(content, {
-      props: "padding, borderRadius"
+      props: "padding, borderRadius, backgroundColor, outlineColor"
     });
 
-    const contentOpen = "left-0 right-0 top-[116px] bottom-0 h-auto p-4";
-    const contentClosed = "bottom-0 h-14 p-2 pl-4";
+    const contentOpen = "top-[116px] bottom-0 h-auto p-4 bg-black outline-white/10";
+    const contentClosed = "bottom-0 h-16 p-2 pl-4 bg-transparent outline-white/0";
 
     if (open) {
       content.classList.remove(...contentClosed.split(" "));
       content.classList.add(...contentOpen.split(" "));
 
-      gsap.to(["#account-lock"], {
-        duration: 0.8,
-        opacity: 1,
-        ease: "expo.inOut",
-        overwrite: "auto"
-      });
       gsap.to(["#account-unlock"], {
         duration: 0.8,
         opacity: 0,
@@ -220,28 +214,19 @@ const _ = ({ children }: Props) => {
         {/* Account trigger */}
         <div
           id="account"
-          className="absolute bottom-0 z-10 flex flex-col justify-start items-start gap-2 p-2 pl-4 h-12 rounded-t-2xl text-black bg-[#dfdfdf] outline outline-1 outline-white/40 shadow-xl shadow-white/40 pointer-events-auto cursor-pointer"
+          className="absolute left-[1px] right-[1px] bottom-0 z-10 flex flex-col justify-start items-start gap-2 p-2 pl-4 h-16 rounded-t-2xl outline outline-1 outline-white/0 pointer-events-auto cursor-pointer"
           onClick={() => !open && setOpen(true)}
         >
-          <div
-            id="account-header"
-            className="relative flex justify-between items-center w-full gap-2"
-          >
-            <p className="text-xl font-bold tracking-tight mr-auto">Don&apos;t Be Dumb</p>
-            <div
-              id="account-unlock"
-              className="flex items-center justify-center gap-1 pl-3 pr-4 py-2 rounded-lg text-black outline-white/20 pointer-events-auto outline outline-1 transition-colors duration-200 ease-in-out"
-            >
-              <Icon icon="fingerprint" className="max-w-[16px] max-h-[16px]" />
-              <p className="tracking-tight whitespace-nowrap">Unlock Album</p>
-            </div>
+          <div className="flex items-center justify-center w-full gap-1 pl-3 pr-4 py-2 rounded-lg pointer-events-auto">
+            <Icon id="account-unlock" icon="fingerprint" className="max-w-[16px] max-h-[16px]" />
+            <p className="tracking-tight whitespace-nowrap">Unlock Album</p>
           </div>
           {/* phone number */}
           <div className="flex items-center gap-2 w-full h-12 min-h-[48px] my-2 pl-4 bg-black/10 rounded-full outline outline-1 outline-white/40 overflow-hidden pointer-events-auto">
-            <Icon icon="phone" className="max-w-[16px] max-h-[16px] text-black/80" />
+            <Icon icon="phone" className="max-w-[16px] max-h-[16px] text-white/80" />
             <input
               id="account-input"
-              className="relative w-full h-full text-lg bg-transparent placeholder:text-black/80 pointer-events-auto cursor-text"
+              className="relative w-full h-full text-lg bg-transparent placeholder:text-white/80 pointer-events-auto cursor-text"
               placeholder="Enter phone number"
               value={phone}
               onChange={e => setPhone(new AsYouType("US").input(e.target.value))}
@@ -258,7 +243,11 @@ const _ = ({ children }: Props) => {
             Verify your phone number to associate your totem & activate your account.
           </p>
           <hr className="bg-black/10" />
-          <button className="ml-auto my-2" data-variant="glass">
+          <button
+            className="ml-auto my-2"
+            data-variant="glass"
+            disabled={!isValidPhoneNumber(phone, "US")}
+          >
             Send Code
           </button>
         </div>
