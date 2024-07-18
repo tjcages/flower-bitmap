@@ -96,7 +96,7 @@ const _ = ({ children }: Props) => {
     });
 
     const contentOpen = "left-0 right-0 top-[116px] bottom-auto h-auto p-4";
-    const contentClosed = "bottom-0 w-[180px] h-8 px-3 py-1";
+    const contentClosed = "bottom-0 w-[160px] h-8 px-3 py-1";
 
     if (open) {
       content.classList.remove(...contentClosed.split(" "));
@@ -157,16 +157,16 @@ const _ = ({ children }: Props) => {
   return (
     <div
       id="main"
-      className="fixed top-0 left-0 right-0 bottom-0 text-white bg-[#04080c] uppercase noise pointer-events-none overflow-scroll"
+      className="fixed top-0 left-0 right-0 bottom-0 text-white bg-[#04080c] uppercase pointer-events-none overflow-scroll"
     >
       <div
         id="children"
-        className="fixed inset-0 pointer-events-auto cursor-pointer"
+        className="fixed inset-0 noise pointer-events-auto cursor-pointer"
         onClick={() => open && setOpen(false)}
       >
         {children}
       </div>
-      <div className="fixed left-6 right-6 bottom-4 top-4 flex flex-col items-center justify-center gap-4 mix-blend-hard-light opacity-90">
+      <div className="fixed left-4 right-4 bottom-4 top-4 flex flex-col items-center justify-center gap-4 mix-blend-hard-light opacity-90">
         {/* Player */}
         <div
           id="player"
@@ -206,19 +206,19 @@ const _ = ({ children }: Props) => {
         {/* Account trigger */}
         <div
           id="account"
-          className="absolute bottom-0 flex flex-col justify-start items-start gap-2 px-3 py-1 bg-black/90 rounded-2xl h-8 outline outline-1 outline-white/40 shadow-xl shadow-black/40 noise overflow-hidden pointer-events-auto cursor-pointer"
+          className="absolute bottom-0 flex flex-col justify-start items-start gap-2 px-3 py-1 text-black bg-white/90 rounded-2xl h-8 outline outline-1 outline-white/40 shadow-xl shadow-white/40 overflow-hidden pointer-events-auto cursor-pointer"
           onClick={() => !open && setOpen(true)}
         >
           <div id="account-header" className="flex justify-center items-center gap-2 opacity-80">
             <Icon icon="profile" className="max-w-[16px] max-h-[16px]" />
-            <p className="font-semibold">Activate Totem</p>
+            <p className="font-medium">Activate Totem</p>
           </div>
           {/* phone number */}
-          <div className="flex items-center gap-2 w-full h-12 min-h-[48px] my-2 pl-4 bg-white/10 rounded-full outline outline-1 outline-white/40 overflow-hidden pointer-events-auto">
-            <Icon icon="phone" className="max-w-[16px] max-h-[16px] text-white/80" />
+          <div className="flex items-center gap-2 w-full h-12 min-h-[48px] my-2 pl-4 bg-black/10 rounded-full outline outline-1 outline-white/40 overflow-hidden pointer-events-auto">
+            <Icon icon="phone" className="max-w-[16px] max-h-[16px] text-black/80" />
             <input
               id="account-input"
-              className="relative w-full h-full text-lg bg-transparent placeholder:text-white/80 pointer-events-auto cursor-text"
+              className="relative w-full h-full text-lg bg-transparent placeholder:text-black/80 pointer-events-auto cursor-text"
               placeholder="Enter phone number"
               value={phone}
               onChange={e => setPhone(new AsYouType("US").input(e.target.value))}
@@ -234,7 +234,7 @@ const _ = ({ children }: Props) => {
           <p className="opacity-80 normal-case leading-normal">
             Verify your phone number to associate your totem & activate your account.
           </p>
-          <hr />
+          <hr className="bg-black/10" />
           {/* send button */}
           <div className="relative z-10 h-full py-1 ml-auto">
             <div className="flex items-center justify-center px-4 py-2 text-black bg-white rounded-full">
