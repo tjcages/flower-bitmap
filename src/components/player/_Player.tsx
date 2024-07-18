@@ -1,9 +1,10 @@
 "use client";
 
+import { cn } from "@/utils";
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { Flip } from "gsap/Flip";
-import { AsYouType } from "libphonenumber-js";
+import { AsYouType, isValidPhoneNumber } from "libphonenumber-js";
 import { useEffect, useRef, useState } from "react";
 
 import Icon from "@/components/player/_Icon";
@@ -206,7 +207,7 @@ const _ = ({ children }: Props) => {
         {/* Account trigger */}
         <div
           id="account"
-          className="absolute bottom-0 flex flex-col justify-start items-start gap-2 px-3 py-1 text-black bg-white/90 rounded-2xl h-8 outline outline-1 outline-white/40 shadow-xl shadow-white/40 overflow-hidden pointer-events-auto cursor-pointer"
+          className="absolute bottom-0 flex flex-col justify-start items-start w-[160px] gap-2 px-3 py-1 text-black bg-white/90 rounded-2xl h-8 outline outline-1 outline-white/40 shadow-xl shadow-white/40 overflow-hidden pointer-events-auto cursor-pointer"
           onClick={() => !open && setOpen(true)}
         >
           <div id="account-header" className="flex justify-center items-center gap-2 opacity-80">
@@ -237,7 +238,14 @@ const _ = ({ children }: Props) => {
           <hr className="bg-black/10" />
           {/* send button */}
           <div className="relative z-10 h-full py-1 ml-auto">
-            <div className="flex items-center justify-center px-4 py-2 text-black bg-white rounded-full">
+            <div
+              className={cn(
+                "flex items-center justify-center px-4 py-2 rounded-full",
+                !isValidPhoneNumber(phone, "US")
+                  ? "text-black bg-white pointer-events-none"
+                  : "text-white bg-black pointer-events-auto"
+              )}
+            >
               <p className="whitespace-nowrap">Send Code</p>
             </div>
           </div>
