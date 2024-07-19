@@ -21,6 +21,10 @@ const defaultState: State = {
 };
 
 function loadState(): State {
+  if (typeof window === "undefined") {
+    return defaultState;
+  }
+
   try {
     const savedState = localStorage.getItem("persistentState");
     if (savedState) {
@@ -33,16 +37,22 @@ function loadState(): State {
   return defaultState;
 }
 
-const state = proxy<State>(loadState());
+const state = proxy<State>(defaultState);
 
-subscribe(state, () => {
-  console.log("subscriber", state);
-  try {
-    localStorage.setItem("persistentState", JSON.stringify(state));
-  } catch (error) {
-    console.error("Failed to save state to localStorage:", error);
-  }
-});
+if (typeof window !== "undefined") {
+  // Initialize state on the client side
+  const loadedState = loadState();
+  Object.assign(state, loadedState);
+
+  subscribe(state, () => {
+    console.log("subscriber", state);
+    try {
+      localStorage.setItem("persistentState", JSON.stringify(state));
+    } catch (error) {
+      console.error("Failed to save state to localStorage:", error);
+    }
+  });
+}
 
 export { state, useSnapshot };
 export type { State, OnboardingState };
