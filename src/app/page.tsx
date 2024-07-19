@@ -9,7 +9,7 @@ type Props = {
 };
 
 // make an example api call
-export async function action() {
+async function action() {
   await new Promise(resolve => setTimeout(resolve, 1000));
   return { data: "Hello, world!" };
 }
