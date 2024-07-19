@@ -65,12 +65,16 @@ const ClientComponent = ({ data }: Props) => {
       });
   }, []);
 
-  return <div ref={ref}>{render()}</div>;
+  return (
+    <div ref={ref}>
+      <Canvas />
+      {render()}
+    </div>
+  );
 };
 
 const PageComponent = (props: Props) => (
   <main>
-    <Canvas />
     <ClientComponent {...props} />
   </main>
 );
