@@ -1,20 +1,24 @@
 import { seo } from "@/seo";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
-import Home from "./_Home";
+import Main from "./_Main";
 
 type Props = {
   params: unknown;
   searchParams: { r?: string };
 };
 
-export default function HomePage(_: Props) {
-  return <Home />;
+// make an example api call
+export async function action() {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return { data: "Hello, world!" };
 }
 
-export async function generateMetadata(
-  { searchParams }: Props,
-  _: ResolvingMetadata
-): Promise<Metadata> {
+export default async function HomePage(_: Props) {
+  const { data } = await action();
+  return <Main data={data} />;
+}
+
+export async function generateMetadata(): Promise<Metadata> {
   return seo;
 }

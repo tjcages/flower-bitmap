@@ -6,7 +6,7 @@ import { Flip } from "gsap/Flip";
 import { AsYouType, isValidPhoneNumber } from "libphonenumber-js";
 import { useEffect, useRef, useState } from "react";
 
-import Icon from "@/components/player/_Icon";
+import { Button, Icon } from "@/components/shared";
 
 gsap.registerPlugin(Flip);
 gsap.registerPlugin(Draggable);
@@ -55,7 +55,7 @@ const _ = ({ children }: Props) => {
     });
 
     const contentOpen = "top-0 bottom-auto h-[100px] px-4 py-2";
-    const contentClosed = "top-auto bottom-[68px] p-6";
+    const contentClosed = "top-auto bottom-[72px] p-6";
 
     if (open) {
       content.classList.remove(...contentClosed.split(" "));
@@ -95,8 +95,8 @@ const _ = ({ children }: Props) => {
       props: "padding, borderRadius, backgroundColor, outlineColor"
     });
 
-    const contentOpen = "top-[116px] bottom-0 h-auto p-4 bg-black outline-white/10";
-    const contentClosed = "bottom-0 h-16 p-2 pl-4 bg-transparent outline-white/0";
+    const contentOpen = "top-[116px] bottom-0 h-auto p-4";
+    const contentClosed = "bottom-0 h-[70px] p-2 pl-4";
 
     if (open) {
       content.classList.remove(...contentClosed.split(" "));
@@ -163,13 +163,10 @@ const _ = ({ children }: Props) => {
   }, []);
 
   return (
-    <div
-      id="main"
-      className="fixed top-0 left-0 right-0 bottom-0 text-white bg-[#111111] uppercase pointer-events-none"
-    >
+    <div id="main" className="fixed top-0 left-0 right-0 bottom-0 uppercase pointer-events-none">
       <div
         id="children"
-        className="fixed top-0 left-0 right-0 bottom-0 noise overflow-hidden pointer-events-auto cursor-pointer"
+        className="fixed top-0 left-0 right-0 bottom-0 overflow-hidden pointer-events-auto cursor-pointer"
         onClick={() => open && setOpen(false)}
       >
         {children}
@@ -179,15 +176,17 @@ const _ = ({ children }: Props) => {
         <div
           id="player"
           ref={playerRef}
-          className="absolute top-auto bottom-12 z-0 left-4 right-4 p-6 bg-black/90 rounded-2xl outline outline-1 outline-white/20 shadow-2xl shadow-black/80 noise mix-blend-hard-light overflow-hidden pointer-events-auto cursor-pointer"
+          className="absolute top-auto bottom-12 z-100 left-4 right-4 p-6 bg-black/90 rounded-2xl outline outline-1 outline-white/20 shadow-2xl shadow-black/80 noise mix-blend-hard-light overflow-hidden pointer-events-auto cursor-pointer"
           onClick={() => open && setOpen(false)}
         >
           <div id="player-header" className="flex items-center justify-between">
             <p className="text-red-500">Now Playing</p>
             <p className="opacity-80">12 tracks</p>
           </div>
-          <div id="player-track" className="my-3">
-            <p className="text-xl contrast-150">Riot (Rowdy Pipe&apos;n)</p>
+          <div id="player-track" className="my-3 w-full gradient-mask-r-50">
+            <p className="text-xl contrast-150 whitespace-nowrap">
+              1. Sights by A$AP Rocky & Playboi Carti
+            </p>
           </div>
           <div id="player-album" className="my-3">
             <p className="text-lg opacity-80">Don&apos;t Be Dumb</p>
@@ -214,19 +213,19 @@ const _ = ({ children }: Props) => {
         {/* Account trigger */}
         <div
           id="account"
-          className="absolute left-[1px] right-[1px] bottom-0 z-10 flex flex-col justify-start items-start gap-2 p-2 pl-4 h-16 rounded-t-2xl outline outline-1 outline-white/0 pointer-events-auto cursor-pointer"
+          className="absolute left-0 right-0 bottom-0 -z-10 bg-white text-black flex flex-col justify-start items-start gap-2 h-[70px] p-2 pt-6 pl-4 pointer-events-auto cursor-pointer"
           onClick={() => !open && setOpen(true)}
         >
-          <div className="flex items-center justify-center w-full gap-1 pl-3 pr-4 py-2 rounded-lg pointer-events-auto">
-            <Icon id="account-unlock" icon="fingerprint" className="max-w-[16px] max-h-[16px]" />
-            <p className="tracking-tight whitespace-nowrap">Unlock Album</p>
-          </div>
+          <div className="absolute bottom-0 -left-1 -right-1 top-0 z-[-1000] h-8 -translate-y-[15px] rounded-b-[40px] bg-black" />
+          <Button icon="fingerprint" className="text-black">
+            Create Account
+          </Button>
           {/* phone number */}
           <div className="flex items-center gap-2 w-full h-12 min-h-[48px] my-2 pl-4 bg-black/10 rounded-full outline outline-1 outline-white/40 overflow-hidden pointer-events-auto">
-            <Icon icon="phone" className="max-w-[16px] max-h-[16px] text-white/80" />
+            <Icon icon="phone" className="max-w-[16px] max-h-[16px] text-black/80" />
             <input
               id="account-input"
-              className="relative w-full h-full text-lg bg-transparent placeholder:text-white/80 pointer-events-auto cursor-text"
+              className="relative w-full h-full text-lg bg-transparent text-inherit placeholder:text-black/80 pointer-events-auto cursor-text"
               placeholder="Enter phone number"
               value={phone}
               onChange={e => setPhone(new AsYouType("US").input(e.target.value))}
@@ -239,10 +238,10 @@ const _ = ({ children }: Props) => {
               type="tel"
             />
           </div>
-          <p className="opacity-80 normal-case leading-normal">
+          <p className="opacity-80 normal-case leading-normal text-inherit">
             Verify your phone number to associate your totem & activate your account.
           </p>
-          <hr className="bg-black/10" />
+          <hr className="my-2 bg-black/10" />
           <button
             className="ml-auto my-2"
             data-variant="glass"

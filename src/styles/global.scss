@@ -2,14 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./_root.scss";
+// @import "./_root.scss";
 
 /*   VARIABLES   */
 @layer base {
   :root {
-    --color-white: 239, 230, 225; /* #efe6e1 */
-    --color-blue: 99, 91, 255; /* #635bff */
-    --color-orange: 248, 184, 134; /* #f8b886 */
+    --color-black: 14 14 14; /* #0e0e0e */
+    --color-white: 239 230 225; /* #efe6e1 */
+    --color-blue: 99 91 255; /* #635bff */
+    --color-orange: 248 184 134; /* #f8b886 */
     --color-dull-red: 237 30 35; /* #ED1E23 */
     --color-green: 5 220 5; /* #05DC05 */
 
@@ -17,9 +18,9 @@
     --color-line: 245 245 244; /* #f5f5f4 */
 
     --color-primary: 12 12 12; /* #0c0c0c */
-    --color-background: 224, 224, 224;
-    --color-box: 235, 235, 235;
-    --color-border: 204, 204, 204;
+    --color-background: 224 224 224;
+    --color-box: 235 235 235;
+    --color-border: 204 204 204;
 
     /* shadcn stuff */
     --radius: 0.5rem;
@@ -35,7 +36,7 @@
 
   html,
   body {
-    @apply bg-[#04080c];
+    @apply bg-black text-white;
     @apply m-0 p-0 font-serif text-primary;
     @apply select-none;
 
@@ -52,28 +53,6 @@
     user-select: text;
   }
 
-  section {
-    @apply fixed bottom-0 left-0 right-0 top-0 z-0 overflow-hidden;
-    @apply max-h-screen w-full;
-    @apply flex flex-col items-center justify-center gap-4;
-    @apply p-2 md:p-6 2xl:p-8;
-    @apply text-white;
-    @apply pointer-events-none select-none;
-
-    height: 100dvh;
-    width: 100dvw;
-  }
-
-  // button {
-  //   @apply flex items-center justify-center;
-  //   @apply px-14 py-1 text-[16px] uppercase md:text-[18px];
-  //   @apply bg-white/80 text-black backdrop-blur-lg;
-  //   @apply pointer-events-auto transition-all duration-300 ease-in-out;
-  //   @apply outline outline-1 outline-offset-0 outline-white/20 md:outline-2 md:outline-offset-0;
-  //   @apply hover:bg-white/100 hover:outline-offset-[2px] hover:outline-white hover:md:outline-offset-[2px];
-  //   @apply disabled:cursor-not-allowed disabled:opacity-50;
-  // }
-
   input:focus,
   textarea:focus {
     outline: none;
@@ -89,23 +68,6 @@
     -webkit-appearance: none;
   }
 
-  section {
-    @apply fixed bottom-0 left-0 right-0 top-0 z-[100000000000];
-    @apply max-h-screen w-full;
-    @apply flex flex-col items-center justify-center md:p-6 2xl:p-8;
-    @apply text-white;
-    @apply pointer-events-none select-none;
-
-    height: 100dvh;
-  }
-
-  article {
-    @apply relative;
-    /* @apply bg-[rgb(var(--color-box))]; */
-    /* @apply rounded-md border border-[rgb(var(--color-border))]; */
-    @apply overflow-hidden;
-  }
-
   h1,
   h2,
   h3,
@@ -116,11 +78,10 @@
   small,
   strong,
   input {
-    margin: 0;
-    padding: 0;
+    @apply m-0 p-0 uppercase text-white;
 
     font-family: var(--font-moderat), serif;
-    line-height: 0.9em !important;
+    line-height: 0.9em;
   }
 
   h1 {
@@ -130,13 +91,12 @@
   h1,
   h2,
   h3 {
-    font-weight: 800 !important;
     line-height: 0.8em;
     letter-spacing: 0.01em;
   }
 
   p {
-    @apply max-w-md text-sm leading-4;
+    @apply max-w-md text-sm leading-4 text-white/80;
     text-wrap: pretty;
   }
 
@@ -151,6 +111,10 @@
   li {
     margin: 0;
     padding: 0;
+  }
+
+  svg {
+    @apply text-white;
   }
 
   hr {
@@ -269,5 +233,27 @@ button {
   &:active {
     box-shadow: none;
     transform: scale(0.95);
+  }
+}
+
+// Custom classes //
+
+.dotted {
+  background-color: #000000;
+  background-image: radial-gradient(#ffffff 0.5px, #000000 0.5px);
+  background-size: 10px 10px;
+}
+
+.pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
   }
 }

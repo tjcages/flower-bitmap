@@ -1,3 +1,3 @@
-import _ from "./_Canvas";
+import Canvas from "./_Canvas";
 
-export default _;
+export { Canvas };

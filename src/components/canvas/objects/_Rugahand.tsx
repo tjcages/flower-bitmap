@@ -44,7 +44,7 @@ class _ extends Group {
   constructor() {
     super();
 
-    this.position.y = -1;
+    this.position.y = -0.5;
 
     this.rotation.x = MathUtils.degToRad(180);
 
@@ -77,14 +77,14 @@ class _ extends Group {
       mesh.material.forEach(material => {
         if (material instanceof MeshStandardMaterial) {
           // silver
-          material.color = new Color(0xe0e1dd);
+          material.color = new Color(0x111111);
           material.metalness = 1;
           material.roughness = 0.1;
         }
       });
     } else {
       if (mesh.material instanceof MeshStandardMaterial) {
-        mesh.material.color = new Color(0xa3a3a3);
+        mesh.material.color = new Color(0x111111);
         mesh.material.metalness = 1;
         mesh.material.roughness = 0.4;
       }

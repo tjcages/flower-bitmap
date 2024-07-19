@@ -20,6 +20,8 @@ class _ extends Group {
   constructor() {
     super();
 
+    this.position.y = -0.6;
+
     this.initReflector();
   }
 
@@ -116,7 +118,6 @@ class _ extends Group {
     };
 
     const mesh = new Mesh(geometry, material);
-    mesh.position.y = -1.05;
     mesh.rotation.x = -Math.PI / 2;
     mesh.receiveShadow = true;
     mesh.add(this.reflector);

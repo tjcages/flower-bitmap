@@ -65,7 +65,7 @@ class WorldController {
     this.renderer.outputColorSpace = LinearSRGBColorSpace;
 
     // Output canvas
-    // this.element = this.renderer.domElement;
+    this.element = this.renderer.domElement;
 
     // 3D scene
     this.scene = new Scene() as Scene & { environmentIntensity: number };
@@ -96,7 +96,7 @@ class WorldController {
   static initLights() {
     this.scene.add(new HemisphereLight(0xffffff, 0xffffff, 3));
 
-    this.light = new DirectionalLight(0xffffff, 8);
+    this.light = new DirectionalLight(0xffffff, 50);
     this.light.position.set(5, 5, 5);
     this.light.castShadow = true;
     this.light.shadow.mapSize.width = 2048;
@@ -127,6 +127,7 @@ class WorldController {
   static initControls() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
+    // this.controls.enableZoom = false;
   }
 
   static addListeners() {

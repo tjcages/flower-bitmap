@@ -13,11 +13,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ["var(--font-geist)", ...defaultTheme.fontFamily.serif],
+        sans: ["var(--font-geist)", ...defaultTheme.fontFamily.serif],
         mono: ["var(--font-modena)", ...defaultTheme.fontFamily.mono]
       },
 
       colors: {
+        black: "rgb(var(--color-black) / <alpha-value>)",
         white: "#EFE6E1",
         blue: { DEFAULT: "rgb(var(--color-blue) / <alpha-value>)" },
         dullRed: { DEFAULT: "rgb(var(--color-dull-red) / <alpha-value>)" },
