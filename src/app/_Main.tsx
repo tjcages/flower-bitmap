@@ -2,12 +2,18 @@
 
 import { state, useSnapshot } from "@/store";
 import autoAnimate from "@formkit/auto-animate";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
-import { Canvas } from "@/components/canvas";
 import { Home } from "@/components/home";
 import { Activation, Intro, Unlocks } from "@/components/onboarding";
 import { Loading } from "@/components/shared";
+
+// Dynamically import the Canvas component with SSR disabled
+const DynamicCanvas = dynamic(() => import("@/components/canvas").then(mod => mod.Canvas), {
+  ssr: false,
+  loading: () => <Loading />
+});
 
 interface Props {
   data: string;
@@ -67,7 +73,7 @@ const ClientComponent = ({ data }: Props) => {
 
   return (
     <div ref={ref}>
-      <Canvas />
+      {isClient && <DynamicCanvas />}
       {render()}
     </div>
   );
