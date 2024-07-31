@@ -1,19 +1,10 @@
 "use client";
 
-import { state, useSnapshot } from "@/store";
 import autoAnimate from "@formkit/auto-animate";
-import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 
 import { Home } from "@/components/home";
-import { Activation, Intro, Unlocks } from "@/components/onboarding";
 import { Loading } from "@/components/shared";
-
-// Dynamically import the Canvas component with SSR disabled
-const DynamicCanvas = dynamic(() => import("@/components/canvas").then(mod => mod.Canvas), {
-  ssr: false,
-  loading: () => <Loading />
-});
 
 interface Props {
   data: string;
@@ -22,7 +13,6 @@ interface Props {
 const ClientComponent = ({ data }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
-  const { activated, onboarding } = useSnapshot(state);
 
   useEffect(() => {
     setIsClient(true);
@@ -32,19 +22,6 @@ const ClientComponent = ({ data }: Props) => {
   const render = () => {
     if (!isClient || !data) {
       return <Loading />;
-    }
-
-    if (!activated) {
-      switch (onboarding) {
-        case "intro":
-          return <Intro />;
-        case "activation":
-          return <Activation />;
-        case "unlocks":
-          return <Unlocks />;
-        default:
-          return <Loading />;
-      }
     }
 
     return <Home />;
@@ -71,12 +48,7 @@ const ClientComponent = ({ data }: Props) => {
       });
   }, []);
 
-  return (
-    <div ref={ref}>
-      {isClient && <DynamicCanvas />}
-      {render()}
-    </div>
-  );
+  return <div ref={ref}>{render()}</div>;
 };
 
 const PageComponent = (props: Props) => (

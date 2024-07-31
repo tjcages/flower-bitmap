@@ -16,14 +16,16 @@ const useKeyPress = (
 
   // handle what happens on key press
   const handleKeyPress = useCallback(
-    (event: { metaKey: boolean; key: string }) => {
+    (event: { metaKey: boolean; key: string; preventDefault: () => void }) => {
       // check if one of the key is part of the ones we want
       if (meta && event.metaKey === true) {
         if (keys.includes(event.key) || keys.length === 0) {
+          event.preventDefault();
           callbackRef.current(event);
         }
       } else if (meta === false || meta === undefined) {
         if (keys.includes(event.key)) {
+          event.preventDefault();
           callbackRef.current(event);
         }
       }

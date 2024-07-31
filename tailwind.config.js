@@ -19,7 +19,7 @@ module.exports = {
 
       colors: {
         black: "rgb(var(--color-black) / <alpha-value>)",
-        white: "#EFE6E1",
+        white: "rgb(var(--color-white) / <alpha-value>)",
         blue: { DEFAULT: "rgb(var(--color-blue) / <alpha-value>)" },
         dullRed: { DEFAULT: "rgb(var(--color-dull-red) / <alpha-value>)" },
         green: { DEFAULT: "rgb(var(--color-green) / <alpha-value>)" },

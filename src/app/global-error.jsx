@@ -1,11 +1,8 @@
-/* eslint-disable */
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
 import Error from "next/error";
 import { useEffect } from "react";
-
-/* eslint-disable */
 
 export default function GlobalError({ error }) {
   useEffect(() => {

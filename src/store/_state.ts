@@ -7,17 +7,13 @@ interface State {
   activated: boolean;
   // Onboarding States
   onboarding: OnboardingState;
-  // User Controls
-  hasSoundPermission: boolean | null;
 }
 
 const defaultState: State = {
   // General States
   activated: false,
   // Onboarding States
-  onboarding: "intro",
-  // User Controls
-  hasSoundPermission: null
+  onboarding: "intro"
 };
 
 function loadState(): State {

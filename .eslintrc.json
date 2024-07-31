@@ -17,7 +17,7 @@
     "plugin:import/typescript",
     "plugin:react/recommended",
     "plugin:@react-three/recommended",
-    "plugin:@tanstack/eslint-plugin-query/recommended",
+    // "plugin:@tanstack/eslint-plugin-query/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
