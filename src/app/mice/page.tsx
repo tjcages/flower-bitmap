@@ -1,4 +1,5 @@
 import { seo } from "@/seo";
+import { assets, content, frag, vert } from "@/store/code/mice";
 import type { Metadata } from "next";
 
 import Main from "@/components/home/_Main";
@@ -27,24 +28,17 @@ async function action() {
   
   export default _;`
       },
-      {
-        name: "_Content",
-        content: `import * as React from 'react';
-  import * as THREE from 'three';
-  
-  const _ = () => {
-    return <img src="/mouse.png" alt="hi" />
-  };
-  
-  export default _;`
-      }
-    ]
+      content,
+      frag,
+      vert
+    ],
+    initialAssets: assets
   };
 }
 
 export default async function HomePage(_: Props) {
-  const { initialFiles } = await action();
-  return <Main initialFiles={initialFiles} />;
+  const { initialFiles, initialAssets } = await action();
+  return <Main initialFiles={initialFiles} initialAssets={initialAssets} />;
 }
 
 export async function generateMetadata(): Promise<Metadata> {

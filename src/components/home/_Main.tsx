@@ -6,25 +6,36 @@ import { useEffect, useRef, useState } from "react";
 import { Home } from "@/components/home";
 import { Loading } from "@/components/shared";
 
-interface Props {
-  data: string;
+interface File {
+  name: string;
+  content: string;
 }
 
-const ClientComponent = ({ data }: Props) => {
+interface Asset {
+  name: string;
+  src: string;
+}
+
+interface Props {
+  initialFiles: File[];
+  initialAssets: Asset[];
+}
+
+const ClientComponent = ({ initialFiles, initialAssets }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-    console.log(data); // test data
-  }, [data]);
+    console.log(initialFiles); // test data
+  }, [initialFiles]);
 
   const render = () => {
-    if (!isClient || !data) {
+    if (!isClient || !initialFiles) {
       return <Loading />;
     }
 
-    return <Home />;
+    return <Home initialFiles={initialFiles} initialAssets={initialAssets} />;
   };
 
   // auto animate on add/remove component
