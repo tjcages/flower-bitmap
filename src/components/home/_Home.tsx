@@ -1,3 +1,4 @@
+import { type Asset } from "@/store/code";
 import dynamic from "next/dynamic";
 import React, { useCallback, useEffect, useState } from "react";
 
@@ -13,11 +14,6 @@ interface Props {
 interface File {
   name: string;
   content: string;
-}
-
-interface Asset {
-  name: string;
-  src: string;
 }
 
 const Home: React.FC<Props> = ({ initialFiles, initialAssets }) => {

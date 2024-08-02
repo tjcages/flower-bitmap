@@ -1,5 +1,6 @@
 "use client";
 
+import { type Asset } from "@/store/code";
 import autoAnimate from "@formkit/auto-animate";
 import { useEffect, useRef, useState } from "react";
 
@@ -9,11 +10,6 @@ import { Loading } from "@/components/shared";
 interface File {
   name: string;
   content: string;
-}
-
-interface Asset {
-  name: string;
-  src: string;
 }
 
 interface Props {

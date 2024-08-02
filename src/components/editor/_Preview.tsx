@@ -1,9 +1,10 @@
+import { type Asset } from "@/store/code";
 import * as Babel from "@babel/standalone";
 import React, { useEffect, useRef, useState } from "react";
 
 interface PreviewProps {
   files: { name: string; content: string }[];
-  assets: { name: string; src: string }[];
+  assets: Asset[];
 }
 
 const Preview: React.FC<PreviewProps> = ({ files, assets }) => {

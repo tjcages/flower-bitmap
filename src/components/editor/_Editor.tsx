@@ -68,7 +68,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange, handleSave }) =
     const initialPackages = detectPackages(code);
     setDetectedPackages(initialPackages);
     onChange(code, initialPackages);
-  }, [code, detectPackages]);
+  }, [code, detectPackages, onChange]);
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -142,7 +142,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange, handleSave }) =
         ],
         parent: editorRef.current
       });
-  }, []);
+  }, [code, handleChange]);
 
   useEffect(() => {
     if (!editorView.current) return;

@@ -1,4 +1,4 @@
-import { content, frag, vert } from "./mice";
+import { type Asset, content, frag, vert } from "./mice";
 
 const _ = [
   {
@@ -8,3 +8,4 @@ const _ = [
 ];
 
 export default _;
+export type { Asset };
