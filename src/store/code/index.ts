@@ -8,6 +8,7 @@ import {
   vert
 } from "./mice";
 import { assets as testAssets, content as testContent, index as testIndex } from "./test";
+import { assets as uniAssets, content as uniContent, index as uniIndex } from "./uni-texture";
 
 const _: Exp[] = [
   {
@@ -19,6 +20,11 @@ const _: Exp[] = [
     slug: "mice",
     code: [miceIndex, miceContent, frag, vert],
     assets: miceAssets
+  },
+  {
+    slug: "uni-texture",
+    code: [uniIndex, uniContent],
+    assets: uniAssets
   }
 ];
 
