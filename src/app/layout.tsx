@@ -23,7 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className={cn(moderat.className, moderat.variable)}>
-        {children}
+        <main>{children}</main>
         <Analytics />
       </body>
     </html>

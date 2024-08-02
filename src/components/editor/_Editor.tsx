@@ -1,4 +1,7 @@
-import { useKeyPress } from "@/utils";
+"use client";
+
+import { state, useSnapshot } from "@/store";
+import { cn, useKeyPress } from "@/utils";
 import { indentWithTab } from "@codemirror/commands";
 import { javascript } from "@codemirror/lang-javascript";
 import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
@@ -18,27 +21,28 @@ const langauge = new Compartment();
 
 const highlightStyle = HighlightStyle.define([
   { tag: tags.string, color: "#ffffff" },
-  { tag: tags.keyword, color: "#ffffff90" },
+  { tag: tags.keyword, color: "#c8303b" },
   { tag: tags.comment, color: "#ffffff50", fontStyle: "italic" },
   { tag: tags.definition(tags.typeName), color: "#ffffff" },
   { tag: tags.typeName, color: "#ffffff80" },
-  { tag: tags.angleBracket, color: "#ffffff80" },
-  { tag: tags.tagName, color: "#ffffff80" },
-  { tag: tags.attributeName, color: "#ffffff80" },
-  { tag: tags.number, color: "#ffffff60" },
+  { tag: tags.angleBracket, color: "#ffffff80" }, // unknown
+  { tag: tags.tagName, color: "#ffffff80" }, // unknown
+  { tag: tags.attributeName, color: "#ffffff80" }, // unknown
+  { tag: tags.number, color: "#ffffff90" },
   { tag: tags.bool, color: "#ffffff60" },
   { tag: tags.null, color: "#ffffff60" },
-  { tag: tags.operator, color: "#ffffff60" },
-  { tag: tags.className, color: "#ffffff70" }
+  { tag: tags.operator, color: "#059fff" },
+  { tag: tags.className, color: "#ffffff70" }, // unknown
+  { tag: tags.function(tags.variableName), color: "#059fff" } // hooks or functions
 ]);
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange, handleSave }) => {
-  useKeyPress(["s"], () => handleSave(), true);
-
+  const { hoveringPreview } = useSnapshot(state);
   const editorView = useRef<EditorView | null>(null);
   const editorRef = useRef<HTMLDivElement>(null);
-
   const [, setDetectedPackages] = useState<string[]>([]);
+
+  useKeyPress(["s"], () => handleSave(), true);
 
   const detectPackages = useCallback((code: string) => {
     const importRegex = /import.*from\s+['"](.+)['"]/g;
@@ -153,7 +157,15 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange, handleSave }) =
     }
   }, [code, editorView]);
 
-  return <div ref={editorRef} className="pointer-events-auto relative h-full w-full" />;
+  return (
+    <div
+      ref={editorRef}
+      className={cn(
+        "pointer-events-auto relative h-full w-full transition-all duration-200",
+        hoveringPreview && "brightness-150 grayscale"
+      )}
+    />
+  );
 };
 
 export default CodeEditor;

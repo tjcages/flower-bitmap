@@ -1,3 +1,4 @@
+import { Asset, File } from "@/store/types";
 import { proxy, subscribe, useSnapshot } from "valtio";
 
 type OnboardingState = "intro" | "activation" | "unlocks";
@@ -5,6 +6,7 @@ type OnboardingState = "intro" | "activation" | "unlocks";
 interface State {
   // General States
   activated: boolean;
+  hoveringPreview: boolean;
   // Onboarding States
   onboarding: OnboardingState;
 }
@@ -12,6 +14,7 @@ interface State {
 const defaultState: State = {
   // General States
   activated: false,
+  hoveringPreview: false,
   // Onboarding States
   onboarding: "intro"
 };
@@ -51,4 +54,4 @@ if (typeof window !== "undefined") {
 }
 
 export { state, useSnapshot };
-export type { OnboardingState, State };
+export type { Asset, File, OnboardingState, State };

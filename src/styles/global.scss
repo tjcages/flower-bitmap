@@ -34,7 +34,6 @@
 
   html,
   body {
-    @apply bg-white text-black;
     @apply m-0 p-0 font-serif text-primary;
     @apply select-none;
 
@@ -45,6 +44,11 @@
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
+  }
+
+  main {
+    @apply fixed inset-0;
+    @apply bg-black text-white;
   }
 
   pre {
@@ -76,7 +80,7 @@
   small,
   strong,
   input {
-    @apply m-0 p-0 uppercase;
+    @apply m-0 p-0;
 
     font-family: var(--font-moderat), serif;
     line-height: 0.9em;

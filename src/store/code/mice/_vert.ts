@@ -1,4 +1,6 @@
-const _ = {
+import { File } from "@/store/types";
+
+const _: File = {
   name: "_vert.ts",
   content: `
   const _ = \`

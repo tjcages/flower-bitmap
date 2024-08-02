@@ -1,4 +1,6 @@
-import { type Asset } from "@/store/code";
+"use client";
+
+import { Asset } from "@/store/types";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";

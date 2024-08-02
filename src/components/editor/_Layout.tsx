@@ -1,24 +1,18 @@
-import { type Asset } from "@/store/code";
-import dynamic from "next/dynamic";
+"use client";
+
+import { Asset, File } from "@/store/types";
 import React, { useCallback, useEffect, useState } from "react";
 
-import { AssetManager, Editor, TabBar } from "@/components/editor";
-
-const Preview = dynamic(() => import("@/components/editor/_Preview"), { ssr: false });
+import { AssetManager, Editor, Preview, TabBar } from "@/components/editor";
 
 interface Props {
   initialFiles: File[];
   initialAssets: Asset[];
 }
 
-interface File {
-  name: string;
-  content: string;
-}
-
 const Home: React.FC<Props> = ({ initialFiles, initialAssets }) => {
   const [files, setFiles] = useState<File[]>(initialFiles);
-  const [activeFileName, setActiveFileName] = useState<string>(initialFiles[1].name);
+  const [activeFileName, setActiveFileName] = useState<string>(initialFiles[0]?.name);
   const [savedFiles, setSavedFiles] = useState<File[]>(initialFiles);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [isAssetManagerOpen, setIsAssetManagerOpen] = useState(false);
@@ -86,7 +80,7 @@ const Home: React.FC<Props> = ({ initialFiles, initialAssets }) => {
   }, []);
 
   return (
-    <div className="noise fixed bottom-0 left-0 right-0 top-0 flex h-screen w-full flex-col overflow-hidden bg-black p-8 pb-0">
+    <div className="noise fixed bottom-0 left-0 right-0 top-0 flex h-screen w-full flex-col overflow-hidden bg-black p-4 pb-0">
       <div className="flex h-full flex-1 gap-4">
         <div className="flex h-full w-1/2 flex-col">
           <TabBar
@@ -105,8 +99,8 @@ const Home: React.FC<Props> = ({ initialFiles, initialAssets }) => {
             />
           </div>
         </div>
-        <div className="relative z-20 h-full w-1/2 pb-8">
-          <div className="h-full w-full overflow-hidden rounded-sm border border-white/20 bg-black">
+        <div className="relative z-20 h-full w-1/2 pb-4">
+          <div className="h-full w-full overflow-hidden rounded-sm border border-white/20 bg-white">
             <Preview files={savedFiles} assets={assets} />
           </div>
         </div>

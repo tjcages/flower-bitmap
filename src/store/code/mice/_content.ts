@@ -1,4 +1,6 @@
-const _ = {
+import { File } from "@/store/types";
+
+const _: File = {
   name: "_Content.tsx",
   content: `import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";

@@ -1,7 +1,4 @@
-interface Asset {
-  name: string;
-  src: string;
-}
+import { Asset } from "@/store/types";
 
 const _: Asset[] = [
   // {
@@ -11,4 +8,3 @@ const _: Asset[] = [
 ];
 
 export default _;
-export type { Asset };

@@ -1,6 +1,9 @@
-import { type Asset } from "@/store/code";
+"use client";
+
+import { state } from "@/store";
+import { Asset } from "@/store/types";
 import * as Babel from "@babel/standalone";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface PreviewProps {
   files: { name: string; content: string }[];
@@ -284,7 +287,11 @@ const Preview: React.FC<PreviewProps> = ({ files, assets }) => {
   }, [assets, files]);
 
   return (
-    <div className="relative h-full w-full">
+    <div
+      className="relative h-full w-full"
+      onPointerEnter={() => (state.hoveringPreview = true)}
+      onPointerLeave={() => (state.hoveringPreview = false)}
+    >
       {error && (
         <div
           className="relative left-0 right-0 top-0 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700"
