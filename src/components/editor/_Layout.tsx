@@ -81,8 +81,8 @@ const Home: React.FC<Props> = ({ initialFiles, initialAssets }) => {
 
   return (
     <div className="noise fixed bottom-0 left-0 right-0 top-0 flex h-screen w-full flex-col overflow-hidden bg-black p-4 pb-0">
-      <div className="flex h-full flex-1 gap-4">
-        <div className="flex h-full w-1/2 flex-col">
+      <div className="flex h-full flex-col gap-4 overflow-scroll lg:flex-row">
+        <div className="flex h-1/2 flex-col lg:h-full lg:w-1/2">
           <TabBar
             files={files}
             activeFile={activeFileName}
@@ -90,7 +90,7 @@ const Home: React.FC<Props> = ({ initialFiles, initialAssets }) => {
             onAddFile={handleAddFile}
             onOpenAssetManager={handleOpenAssetManager}
           />
-          <div className="h-full flex-1 overflow-hidden">
+          <div className="h-full overflow-hidden lg:flex-1">
             <Editor
               key={activeFileName}
               code={activeFile.content}
@@ -99,7 +99,7 @@ const Home: React.FC<Props> = ({ initialFiles, initialAssets }) => {
             />
           </div>
         </div>
-        <div className="relative z-20 h-full w-1/2 pb-4">
+        <div className="relative z-20 h-1/2 pb-4 lg:h-full lg:w-1/2">
           <div className="h-full w-full overflow-hidden rounded-sm border border-white/20 bg-white">
             <Preview files={savedFiles} assets={assets} />
           </div>
