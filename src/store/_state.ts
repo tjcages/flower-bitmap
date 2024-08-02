@@ -51,4 +51,4 @@ if (typeof window !== "undefined") {
 }
 
 export { state, useSnapshot };
-export type { State, OnboardingState };
+export type { OnboardingState, State };
