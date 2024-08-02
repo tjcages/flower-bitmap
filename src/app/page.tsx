@@ -38,13 +38,14 @@ async function action() {
   
   export default _;`
       }
-    ]
+    ],
+    initialAssets: []
   };
 }
 
 export default async function HomePage(_: Props) {
-  const { initialFiles } = await action();
-  return <Main initialFiles={initialFiles} />;
+  const { initialFiles, initialAssets } = await action();
+  return <Main initialFiles={initialFiles} initialAssets={initialAssets} />;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
