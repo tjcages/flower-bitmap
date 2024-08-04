@@ -104,7 +104,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, onChange, handleSave }) =
                 outline: "none",
                 overflow: "hidden"
               },
-              ".cm-scroller": { overflow: "auto" },
+              ".cm-scroller": { overflow: "auto", paddingTop: "16px" },
               ".cm-selectionLayer .cm-selectionBackground": {
                 backgroundColor: "rgba(255,255,255,0.1) !important"
               },

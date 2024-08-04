@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const _ = () => {
   return (
-    <div className="absolute left-0 right-0 top-0 z-10 grid grid-cols-3 items-center justify-between justify-items-end gap-8 p-4">
+    <div className="relative grid grid-cols-3 items-center justify-between justify-items-end gap-8 py-8 pl-24 pr-8">
       <Link href="/" className="flex w-full items-center justify-start uppercase">
         <span>D</span>
         <span className="-scale-x-100">epo</span>

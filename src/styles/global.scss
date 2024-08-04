@@ -6,7 +6,8 @@
 @layer base {
   :root {
     --color-black: 14 14 14; /* #0e0e0e */
-    --color-white: 247 245 243; /* #F7F5F3 */
+    --color-white: 249 249 249; /* #F9F9F9 */
+    --color-grey: 224 224 224; /* #E5E5E3 */
     --color-blue: 99 91 255; /* #635bff */
     --color-orange: 248 184 134; /* #f8b886 */
     --color-dull-red: 237 30 35; /* #ED1E23 */
@@ -34,7 +35,7 @@
 
   html,
   body {
-    @apply m-0 p-0 font-serif text-primary;
+    @apply m-0 p-0 font-serif;
     @apply select-none;
 
     font-size: 15px;
@@ -48,7 +49,7 @@
 
   main {
     @apply fixed inset-0;
-    @apply bg-black text-white;
+    @apply bg-white text-black;
   }
 
   pre {
@@ -152,4 +153,17 @@ body {
 
 .noise {
   @apply after:pointer-events-none after:absolute after:inset-0 after:z-10 after:bg-[url('/textures/noise.png')] after:opacity-100 after:mix-blend-hard-light;
+}
+
+.dotted {
+  background-image: radial-gradient(rgb(var(--color-grey)) 0.5px, rgb(var(--color-white)) 0.5px);
+  background-size: 10px 10px;
+}
+
+.dotted-black {
+  background-image: radial-gradient(
+    rgb(var(--color-white) / 10) 0.5px,
+    rgb(var(--color-black)) 0.5px
+  );
+  background-size: 10px 10px;
 }

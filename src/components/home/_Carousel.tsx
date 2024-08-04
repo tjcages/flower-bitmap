@@ -4,6 +4,10 @@ import { useLenis } from "@/utils";
 import Link from "next/link";
 import { useRef } from "react";
 
+interface Props {
+  title: string;
+}
+
 const featured = [
   {
     id: 1,
@@ -49,7 +53,7 @@ const featured = [
   }
 ];
 
-const _ = () => {
+const _ = ({ title }: Props) => {
   const ref = useRef() as React.MutableRefObject<HTMLDivElement>;
   useLenis(ref, undefined, {
     orientation: "horizontal"
@@ -58,19 +62,33 @@ const _ = () => {
   return (
     <div
       ref={ref}
-      className="absolute bottom-0 left-0 right-0 flex flex-col items-start justify-start gap-4 overflow-scroll px-24 py-8"
+      className="flex flex-col items-start justify-start gap-8 overflow-scroll px-24 py-8"
     >
+      <h3 className="sticky left-0">{title}</h3>
       <div className="flex items-center justify-start gap-12">
         {featured.map(f => (
           <Link
             key={f.id}
             href={`/e/${f.slug}`}
-            className="group flex flex-col items-start justify-start gap-1"
+            className="group flex flex-col items-start justify-start gap-4"
           >
-            <div className="aspect-video w-[15vw] max-w-[300px] flex-shrink-0 border border-white/20 bg-white/10"></div>
-            <p className="opacity-50 transition-opacity duration-100 ease-in group-hover:opacity-100">
-              {f.title}
-            </p>
+            <div className="relative aspect-[5/6] w-[25vw] max-w-[500px] flex-shrink-0 overflow-hidden rounded-md border border-black/20 bg-black/10">
+              <video
+                className="absolute z-10 h-full w-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source src="/assets/featured.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div className="group flex flex-col items-start justify-start gap-1">
+              <h5>{f.title}</h5>
+              <p className="opacity-50 transition-opacity duration-100 ease-in group-hover:opacity-100">
+                {f.title}
+              </p>
+            </div>
           </Link>
         ))}
       </div>
