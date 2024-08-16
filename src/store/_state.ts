@@ -1,22 +1,13 @@
-import { Asset, File } from "@/store/types";
 import { proxy, subscribe, useSnapshot } from "valtio";
-
-type OnboardingState = "intro" | "activation" | "unlocks";
 
 interface State {
   // General States
   activated: boolean;
-  hoveringPreview: boolean;
-  // Onboarding States
-  onboarding: OnboardingState;
 }
 
 const defaultState: State = {
   // General States
-  activated: false,
-  hoveringPreview: false,
-  // Onboarding States
-  onboarding: "intro"
+  activated: false
 };
 
 function loadState(): State {
@@ -54,4 +45,4 @@ if (typeof window !== "undefined") {
 }
 
 export { state, useSnapshot };
-export type { Asset, File, OnboardingState, State };
+export type { State };
